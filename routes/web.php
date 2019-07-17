@@ -17,6 +17,8 @@ Route::get('/', function () {
 Route::get('/user/aaa', 'Admin\User@aaa');
 
 
+
+
 Route::group(['middleware' => ['admin_login']], function () {
     Route::get('/admin/login/shop_single/{id}', 'admin\login@shop_single');
     Route::get('/admin/login/index', 'admin\login@index');
@@ -58,6 +60,8 @@ Route::group(['middleware' => ['index_index']], function () {
     Route::get('/index/index/tl', 'index\index@tl');
 });
 
+
+Route::get('/zho/user', 'zho\index@user');
 
 Route::get('/zho/index', 'zho\index@index');
 Route::post('/zho/insert', 'zho\index@insert');

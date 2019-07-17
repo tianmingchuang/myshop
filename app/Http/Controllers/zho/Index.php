@@ -89,5 +89,11 @@ class Index extends Controller
                 echo '修改失败';
             }
         }
+
+    }
+
+    public function user()
+    {
+        return view('zho/user');
     }
 }
