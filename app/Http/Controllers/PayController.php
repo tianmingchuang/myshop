@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Pay;
+use DB;
+use App\Admin\Order;
 class PayController extends Controller
 {
     public $app_id;
@@ -22,17 +24,52 @@ class PayController extends Controller
         $this->return_url = env('APP_URL').'/return_url';
     }
 
-    public function do_pay(){
+    public function do_pay(Request $request){
+        $jiage = 0;
+        $value = $request->session()->get('res');
+        $data = DB::table('cart')->where([['uid','=',$value->id]])->get();
+//        dd($data);
+        foreach ($data as $v){
+            $v = ($v->shuliang) * ($v->goods_price);
+            $jiage +=$v;
+        }
+//        dd($jiage);
+//        dd($request->all());
+//        $value = $request->session()->get('res');
         $oid = time().mt_rand(1000,1111);  //订单编号
+        $data = Order::insert(['uid'=>($value->id),'oid'=>$oid,'add_time'=>time(),'pay_money'=>$jiage]);
+//        dd($data);
+//        dd($oid);
+        if($data){
+            return redirect('admin/login/order');
+        }else{
+            echo '请重新添加';
+        }
 //        $this->ali_pay($oid);
+//        $order = [
+//          'out_trade_no'=>$oid,
+//          'total_amount'=>"$jiage",
+//          'subject'=>'七月商城',
+//        ];
+//        dd($order);
+//        return Pay::alipay()->web($order);
+    }
+
+    public function do_pays(Request $request , $id)
+    {
+//        dd($id);
+        $value = $request->session()->get('res');
+        $data = Order::where([['uid','=',$value->id],['id','=',$id]])->first();
+//        dd($data);
         $order = [
-          'out_trade_no'=>$oid,
-          'total_amount'=>'1',
-          'subject'=>'test subject -测试',
+          'out_trade_no'=>$data->oid,
+          'total_amount'=>"$data->pay_money",
+          'subject'=>'七月商城',
         ];
+//        dd($order);
         return Pay::alipay()->web($order);
     }
-    
+
     public function rsaSign($params) {
         return $this->sign($this->getSignContent($params));
     }
@@ -201,5 +238,35 @@ class PayController extends Controller
             openssl_free_key($res);
         }
         return $result;
+    }
+    public function return_url()
+    {
+        header('Refresh:2;url=admin/login/order');
+        echo "<h2>订单:  ".$_GET['out_trade_no'] . ' 支付成功, 正在跳转</h2>';
+    }
+
+    public function notify_url()
+    {
+        $data = json_encode($_POST);
+        $log_str = '>>>> '.date('Y-m-d H:i:s') . $data . "<<<<\n\n";
+        //记录日志
+        file_put_contents(storage_path('logs/alipay.log'),$log_str,FILE_APPEND);
+        //验签
+        $res = $this->verify($_POST);
+        $log_str = '>>>> ' . date('Y-m-d H:i:s');
+        if($res){
+            //记录日志 验签失败
+            $log_str .= " Sign Failed!<<<<< \n\n";
+            file_put_contents(storage_path('logs/alipay.log'),$log_str,FILE_APPEND);
+        }else{
+            $log_str .= " Sign OK!<<<<< \n\n";
+            file_put_contents(storage_path('logs/alipay.log'),$log_str,FILE_APPEND);
+            //验证订单交易状态
+            if($_POST['trade_status']=='TRADE_SUCCESS'){
+
+            }
+        }
+
+        echo 'success';
     }
 }

@@ -25,6 +25,8 @@ Route::group(['middleware' => ['admin_login']], function () {
     Route::post('/admin/login/cart_do', 'admin\login@cart_do');
     Route::get('/admin/login/cart', 'admin\login@cart');
     Route::get('/admin/login/tc', 'admin\login@tc');
+    Route::get('/admin/login/order', 'admin\login@order');
+
 
 
 });
@@ -75,7 +77,9 @@ Route::group(['middleware' => ['login']], function () {
 
 
 
-Route::get('pay', 'PayController@do_pay');
+Route::post('pay', 'PayController@do_pay');
+Route::get('pays/{id}', 'PayController@do_pays');
+
 Route::get('return_url', 'PayController@return_url');//同步
 Route::get('notify_url', 'PayController@notify_url');//异步
 

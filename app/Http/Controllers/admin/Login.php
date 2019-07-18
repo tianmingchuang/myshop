@@ -4,6 +4,8 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Admin\Order;
+
 use DB;
 
 class Login extends Controller
@@ -113,8 +115,16 @@ class Login extends Controller
             $v = ($v->shuliang) * ($v->goods_price);
             $jiage +=$v;
         }
-//        dd($jiage);
-        return view('admin/login/cart',['data'=>$data,'jiage'=>$jiage]);
+//        dd($v);
+        return view('admin/login/cart',['data'=>$data,'jiages'=>$jiage,'jiage'=>$v]);
     }
 
+    public function order()
+    {
+        $data = Order::get();
+//        dd($data);
+//        $data = Order::get();
+//        dd($data);
+        return view('admin/login/order',['data'=>$data]);
+    }
 }

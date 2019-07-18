@@ -1,6 +1,7 @@
 @extends('admin.layout.login')
 @section('title','购物车')
 @section('body')
+    <form action="{{url('pay')}}" method="post">
     <div class="cart section">
         <div class="container">
             <div class="pages-head">
@@ -8,7 +9,7 @@
             </div>
 
             <div class="content">
-
+    @csrf
                 @foreach ($data as $v)
                 <div class="cart-2">
                     <div class="row">
@@ -48,7 +49,7 @@
                             <h5>total price</h5>
                         </div>
                         <div class="col s7">
-                            <h5>$</h5>
+                            <h5>${{$jiage}}</h5>
                         </div>
                     </div>
 
@@ -60,7 +61,9 @@
                             <h5><i class="fa fa-trash"></i></h5>
                         </div>
                     </div>
-                </div>
+
+{{--                    {{$v->goods_id}}--}}
+{{--                    <input type="hidden" name="id" id="{{$v->goods_id}}">--}}
                 @endforeach
             </div>
             <div class="total">
@@ -85,11 +88,12 @@
                         <h6>Total</h6>
                     </div>
                     <div class="col s5">
-                        <h6>${{$jiage}}</h6>
+                        <h6>${{$jiages}}</h6>
                     </div>
                 </div>
             </div>
             <button class="btn button-default">Process to Checkout</button>
         </div>
     </div>
+    </form>
 @endsection
