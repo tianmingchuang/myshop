@@ -59,9 +59,9 @@ class PayController extends Controller
     {
 //        dd($id);
         $id = $request->all();
-//        dd($id['id']);
+//        dd($id['o_id']);
         $value = $request->session()->get('res');
-        $data = Order::where([['uid','=',$value->id],['id','=',$id['id']]])->first();
+        $data = Order::where([['uid','=',$value->id],['id','=',$id['o_id']]])->first();
 //        dd($data);
         $order = [
           'out_trade_no'=>$data->oid,
