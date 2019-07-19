@@ -247,26 +247,10 @@ class PayController extends Controller
 
     public function notify_url()
     {
-        $data = json_encode($_POST);
-        $log_str = '>>>> '.date('Y-m-d H:i:s') . $data . "<<<<\n\n";
-        //记录日志
-        file_put_contents(storage_path('logs/alipay.log'),$log_str,FILE_APPEND);
-        //验签
-        $res = $this->verify($_POST);
-        $log_str = '>>>> ' . date('Y-m-d H:i:s');
-        if($res){
-            //记录日志 验签失败
-            $log_str .= " Sign Failed!<<<<< \n\n";
-            file_put_contents(storage_path('logs/alipay.log'),$log_str,FILE_APPEND);
-        }else{
-            $log_str .= " Sign OK!<<<<< \n\n";
-            file_put_contents(storage_path('logs/alipay.log'),$log_str,FILE_APPEND);
-            //验证订单交易状态
-            if($_POST['trade_status']=='TRADE_SUCCESS'){
+       $data = file_get_contents("php://input");
+       dd($data);
+       \Log::Info($data);
+       $post = json_decode($data,1);
 
-            }
-        }
-
-        echo 'success';
     }
 }
