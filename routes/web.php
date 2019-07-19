@@ -20,59 +20,59 @@ Route::get('/user/aaa', 'Admin\User@aaa');
 
 
 Route::group(['middleware' => ['admin_login']], function () {
-    Route::get('/admin/login/shop_single/{id}', 'admin\login@shop_single');
-    Route::get('/admin/login/index', 'admin\login@index');
-    Route::post('/admin/login/cart_do', 'admin\login@cart_do');
-    Route::get('/admin/login/cart', 'admin\login@cart');
-    Route::get('/admin/login/tc', 'admin\login@tc');
-    Route::get('/admin/login/order', 'admin\login@order');
+    Route::get('/admin/login/shop_single/{id}', 'admin\Login@shop_single');
+    Route::get('/admin/login/index', 'admin\Login@index');
+    Route::post('/admin/login/cart_do', 'admin\Login@cart_do');
+    Route::get('/admin/login/cart', 'admin\Login@cart');
+    Route::get('/admin/login/tc', 'admin\Login@tc');
+    Route::get('/admin/login/order', 'admin\Login@order');
 
 
 
 });
-Route::get('/admin/login/login', 'admin\login@login');
-Route::post('/admin/login/login_do', 'admin\login@login_do');
-Route::get('/admin/login/about', 'admin\login@about');
-Route::get('/admin/login/register', 'admin\login@register');
-Route::post('/admin/login/register_do', 'admin\login@register_do');
+Route::get('/admin/login/login', 'admin\Login@login');
+Route::post('/admin/login/login_do', 'admin\Login@login_do');
+Route::get('/admin/login/about', 'admin\Login@about');
+Route::get('/admin/login/register', 'admin\Login@register');
+Route::post('/admin/login/register_do', 'admin\Login@register_do');
 
 
 
-Route::get('/index/index/login', 'index\index@login');
-Route::post('/index/index/login_do', 'index\index@login_do');
-Route::get('/index/index/logins', 'index\index@logins');
-Route::post('/index/index/logins_do', 'index\index@logins_do');
+Route::get('/index/index/login', 'index\Index@login');
+Route::post('/index/index/login_do', 'index\Index@login_do');
+Route::get('/index/index/logins', 'index\Index@logins');
+Route::post('/index/index/logins_do', 'index\Index@logins_do');
 
 
 
 
 
 Route::group(['middleware' => ['index_index']], function () {
-    Route::get('/index/index/loginss', 'index\index@loginss');
-    Route::get('/index/index/hmd/{id}', 'index\index@hmd');
-    Route::get('/index/index/hmd_do', 'index\index@hmd_do');
-    Route::get('/index/index/hmd_dos/{id}', 'index\index@hmd_dos');
-    Route::get('/index/index/quanxian', 'index\index@quanxian');
-    Route::get('/index/index/index', 'index\index@index');
-    Route::post('/index/index/index_do', 'index\index@index_do');
-    Route::get('/index/index/ecaa', 'index\index@ecaa');
-    Route::get('/index/index/update/{id}', 'index\index@update');
-    Route::post('/index/index/update_do', 'index\index@update_do');
-    Route::get('/index/index/delete/{id}', 'index\index@delete');
-    Route::get('/index/index/tl', 'index\index@tl');
+    Route::get('/index/index/loginss', 'index\Index@loginss');
+    Route::get('/index/index/hmd/{id}', 'index\Index@hmd');
+    Route::get('/index/index/hmd_do', 'index\Index@hmd_do');
+    Route::get('/index/index/hmd_dos/{id}', 'index\Index@hmd_dos');
+    Route::get('/index/index/quanxian', 'index\Index@quanxian');
+    Route::get('/index/index/index', 'index\Index@index');
+    Route::post('/index/index/index_do', 'index\Index@index_do');
+    Route::get('/index/index/ecaa', 'index\Index@ecaa');
+    Route::get('/index/index/update/{id}', 'index\Index@update');
+    Route::post('/index/index/update_do', 'index\Index@update_do');
+    Route::get('/index/index/delete/{id}', 'index\Index@delete');
+    Route::get('/index/index/tl', 'index\Index@tl');
 });
 
 
-Route::get('/zho/user', 'zho\index@user');
+Route::get('/zho/user', 'zho\Index@user');
 
-Route::get('/zho/index', 'zho\index@index');
-Route::post('/zho/insert', 'zho\index@insert');
-Route::get('/zho/ecaa', 'zho\index@ecaa');
-Route::get('/zho/delete/{id}', 'zho\index@delete');
+Route::get('/zho/index', 'zho\Index@index');
+Route::post('/zho/insert', 'zho\Index@insert');
+Route::get('/zho/ecaa', 'zho\Index@ecaa');
+Route::get('/zho/delete/{id}', 'zho\Index@delete');
 
 Route::group(['middleware' => ['login']], function () {
-    Route::get('/zho/update/{id}', 'zho\index@update');
-    Route::post('/zho/update_do', 'zho\index@update_do');
+    Route::get('/zho/update/{id}', 'zho\Index@update');
+    Route::post('/zho/update_do', 'zho\Index@update_do');
 });
 
 
