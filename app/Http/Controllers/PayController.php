@@ -55,13 +55,11 @@ class PayController extends Controller
 //        return Pay::alipay()->web($order);
     }
 
-    public function do_pays(Request $request)
+    public function do_pays(Request $request , $id)
     {
 //        dd($id);
-        $id = $request->all();
-//        dd($id['o_id']);
         $value = $request->session()->get('res');
-        $data = Order::where([['uid','=',$value->id],['id','=',$id['o_id']]])->first();
+        $data = Order::where([['uid','=',$value->id],['id','=',$id]])->first();
 //        dd($data);
         $order = [
           'out_trade_no'=>$data->oid,

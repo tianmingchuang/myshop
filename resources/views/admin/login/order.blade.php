@@ -14,7 +14,7 @@
         <td>{{$v->pay_money}}</td>
         <td>
             @if($v->state==1)
-                <a href="{{url('pays')}}?o_id={{$v->id}}">未支付</a>
+                <a href="{{url('pays',['id'=>$v->id])}}">未支付</a>
             @elseif($v->state==2)
                 已支付
             @else($v->state==3)
