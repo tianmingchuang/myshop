@@ -1,0 +1,9 @@
+@extends('zho.login_4.index')
+@section('title','车辆入库')
+@section('body')
+    <center>
+    <h3>尊敬的{{$data->name}}</h3>
+    <h3>停车:{{$data->shijian}}</h3>
+    <h3>收费:{{$data->qianshu}}元</h3>
+    </center>
+@endsection

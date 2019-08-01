@@ -83,3 +83,121 @@ Route::get('pays/{id}', 'PayController@do_pays');
 Route::get('return_url', 'PayController@return_url');//同步
 Route::get('notify_url', 'PayController@notify_url');//异步
 
+
+
+Route::get('/zho/login/index', 'zho\Login@index');
+Route::get('/zho/login/select', 'zho\Login@select');
+Route::get('/zho/login/update/{id}', 'zho\Login@update');
+Route::post('/zho/login/insert', 'zho\Login@insert');
+
+
+
+Route::get('/zho/login_1/login', 'zho\Login_1@login');
+Route::post('/zho/login_1/login_do', 'zho\Login_1@login_do');
+
+Route::group(['middleware' => ['login_1']], function(){
+    Route::get('/zho/login_1/index', 'zho\Login_1@index');
+    Route::post('/zho/login_1/index_do', 'zho\Login_1@index_do');
+    Route::get('/zho/login_1/index_do_1', 'zho\Login_1@index_do_1');
+    Route::get('/zho/login_1/index_do_2', 'zho\Login_1@index_do_2');
+    Route::get('/zho/login_1/index_do_3', 'zho\Login_1@index_do_3');
+    Route::post('/zho/login_1/index_do_1_do', 'zho\Login_1@index_do_1_do');
+    Route::post('/zho/login_1/index_do_2_do', 'zho\Login_1@index_do_2_do');
+    Route::post('/zho/login_1/index_do_3_do', 'zho\Login_1@index_do_3_do');
+    Route::get('/zho/login_1/ecaa', 'zho\Login_1@ecaa');
+    Route::get('/zho/login_1/ecaas', 'zho\Login_1@ecaas');
+    Route::post('/zho/login_1/eca', 'zho\Login_1@eca');
+    Route::get('/zho/login_1/ec', 'zho\Login_1@ec');
+    Route::get('/zho/login_1/ea/{id}', 'zho\Login_1@ea');
+
+
+});
+
+
+Route::get('/zho/login_2/login', 'zho\Login_2@login');
+Route::post('/zho/login_2/login_do', 'zho\Login_2@login_do');
+
+Route::group(['middleware' => ['login_2']], function(){
+    Route::post('/zho/login_2/index', 'zho\Login_2@index');
+    Route::get('/zho/login_2/index_do', 'zho\Login_2@index_do');
+    Route::get('/zho/login_2/index_do_do', 'zho\Login_2@index_do_do');
+    Route::post('/zho/login_2/index_do_1', 'zho\Login_2@index_do_1');
+    Route::get('/zho/login_2/index_do_2', 'zho\Login_2@index_do_2');
+    Route::get('/zho/login_2/index_do_3', 'zho\Login_2@index_do_3');
+    Route::post('/zho/login_2/index_do_2_do', 'zho\Login_2@index_do_2_do');
+    Route::post('/zho/login_2/index_do_3_do', 'zho\Login_2@index_do_3_do');
+    Route::get('/zho/login_2/ecaa', 'zho\Login_2@ecaa');
+    Route::get('/zho/login_2/eca', 'zho\Login_2@eca');
+    Route::get('/zho/login_2/delete/{id}', 'zho\Login_2@delete');
+    Route::get('/zho/login_2/select/{id}', 'zho\Login_2@select');
+    Route::get('/zho/login_2/select_do/{id}', 'zho\Login_2@select_do');
+
+});
+
+
+Route::get('/zho/login_3/index', 'zho\Login_3@index');
+Route::post('/zho/login_3/index_do', 'zho\Login_3@index_do');
+Route::get('/zho/login_3/ecaa', 'zho\Login_3@ecaa');
+Route::get('/zho/login_3/ecaa_do/{id}', 'zho\Login_3@ecaa_do');
+Route::post('/zho/login_3/ecaa_do_1', 'zho\Login_3@ecaa_do_1');
+Route::get('/zho/login_3/login', 'zho\Login_3@login');
+Route::get('/zho/login_3/login_do/{id}', 'zho\Login_3@login_do');
+Route::post('/zho/login_3/login_do_1', 'zho\Login_3@login_do_1');
+Route::get('/zho/login_3/login_do_2/{id}', 'zho\Login_3@login_do_2');
+Route::get('/zho/login_3/ec/{id}', 'zho\Login_3@ec');
+
+
+Route::get('/zho/login_4/login', 'zho\Login_4@login');
+Route::post('/zho/login_4/login_do', 'zho\Login_4@login_do');
+
+Route::group(['middleware' => ['login_4']], function(){
+    Route::get('/zho/login_4/index', 'zho\Login_4@index');
+    Route::get('/zho/login_4/index_1', 'zho\Login_4@index_1');
+    Route::get('/zho/login_4/index_13', 'zho\Login_4@index_13');
+    Route::get('/zho/login_4/index_11', 'zho\Login_4@index_11');
+    Route::post('/zho/login_4/index_111', 'zho\Login_4@index_111');
+    Route::get('/zho/login_4/index_12', 'zho\Login_4@index_12');
+    Route::post('/zho/login_4/index_121', 'zho\Login_4@index_121');
+    Route::get('/zho/login_4/asd', 'zho\Login_4@asd');
+    Route::post('/zho/login_4/asd_do', 'zho\Login_4@asd_do');
+    Route::get('/zho/login_4/index_2', 'zho\Login_4@index_2');
+    Route::post('/zho/login_4/index_21', 'zho\Login_4@index_21');
+    Route::get('/zho/login_4/index_22', 'zho\Login_4@index_22');
+    Route::get('/zho/login_4/index_212/{id}', 'zho\Login_4@index_212');
+    Route::get('/zho/login_4/index_3', 'zho\Login_4@index_3');
+
+});
+
+
+Route::get('/zho/login_5/login', 'zho\Login_5@login');
+Route::post('/zho/login_5/login_do', 'zho\Login_5@login_do');
+Route::group(['middleware' => ['login_5']], function(){
+    Route::get('/zho/login_5/index', 'zho\Login_5@index');
+    Route::get('/zho/login_5/index_1', 'zho\Login_5@index_1');
+    Route::get('/zho/login_5/index_13', 'zho\Login_5@index_13');
+    Route::get('/zho/login_5/index_11', 'zho\Login_5@index_11');
+    Route::post('/zho/login_5/index_111', 'zho\Login_5@index_111');
+    Route::get('/zho/login_5/index_12', 'zho\Login_5@index_12');
+    Route::post('/zho/login_5/index_121', 'zho\Login_5@index_121');
+    Route::get('/zho/login_5/index_2', 'zho\Login_5@index_2');
+    Route::post('/zho/login_5/index_21', 'zho\Login_5@index_21');
+    Route::get('/zho/login_5/index_22', 'zho\Login_5@index_22');
+
+});
+
+
+Route::get('/zho/login_6/index', 'zho\Login_6@index');
+
+
+Route::get('/kao/index/login', 'kao\index@login');
+Route::post('/kao/index/login_do', 'kao\index@login_do');
+
+Route::group(['middleware' => ['kao']], function() {
+    Route::get('/kao/index/index', 'kao\index@index');
+    Route::post('/kao/index/index_do', 'kao\index@index_do');
+    Route::get('/kao/index/index_1/{id}', 'kao\index@index_1');
+
+});
+
+Route::post('/wx/index/index/index', 'wx\index\index@index');
+

@@ -62,7 +62,13 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin_login' => \App\Http\Middleware\admin\Login::class,
         'index_index' => \App\Http\Middleware\index\Index::class,
+        'login_1' => \App\Http\Middleware\zho\Login_1::class,
+        'login_2' => \App\Http\Middleware\zho\Login_2::class,
+        'login_4' => \App\Http\Middleware\zho\Login_4::class,
+        'login_5' => \App\Http\Middleware\zho\Login_5::class,
         'login' => \App\Http\Middleware\Login::class,
+        'kao' => \App\Http\Middleware\kao\Kao::class,
+
 
     ];
 

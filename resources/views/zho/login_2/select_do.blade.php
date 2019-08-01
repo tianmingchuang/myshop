@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>详情展示</title>
+</head>
+<body>
+    <table border>
+        @foreach($data as $v)
+        <tr>
+            <td>项目名称:</td>
+            <td>{{$v->name}}</td>
+        </tr>
+        @endforeach
+        @foreach($datas as $v)
+        <tr>
+            <td>问题:</td>
+            <td>{{$v->name}}</td>
+        </tr>
+            @endforeach
+{{--            @foreach--}}
+{{--        <tr>--}}
+{{--            <td></td>--}}
+{{--            <td></td>--}}
+{{--            <td></td>--}}
+{{--            <td></td>--}}
+{{--        </tr>--}}
+{{--            @endforeach--}}
+    </table>
+</body>
+</html>
