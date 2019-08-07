@@ -201,3 +201,32 @@ Route::group(['middleware' => ['kao']], function() {
 
 Route::post('/wx/index/index/index', 'wx\index\index@index');
 
+
+Route::get('/wx/index/index_1/index', 'wx\index\index_1@index');
+Route::get('/wx/index/index_1/index_1', 'wx\index\index_1@index_1');
+Route::get('/wx/index/index_1/index_2', 'wx\index\index_1@index_2');
+Route::get('/wx/index/index_1/index_3', 'wx\index\index_1@index_3');
+Route::get('/wx/index/index_1/index_4/{id}', 'wx\index\index_1@index_4');
+
+
+//微信授权注册登录
+Route::get('/wx/index/index_1/login', 'wx\index\index_1@login');
+Route::get('/wx/index/index_1/code', 'wx\index\index_1@code');
+Route::get('/wx/index/index_1/code_1', 'wx\index\index_1@code_1');
+
+//模板内容获取
+Route::get('/wx/index/index_1/template_list', 'wx\index\index_1@template_list');
+
+
+//模板删除
+Route::get('/wx/index/index_1/del_temlate', 'wx\index\index_1@del_temlate');
+
+
+//模板消息推送
+Route::get('/wx/index/index_1/push_template', 'wx\index\index_1@push_template');
+
+
+//图片  音频   视频  缩略图 上传
+Route::get('/wx/index/index_1/index_5', 'wx\index\index_1@index_5');
+Route::post('/wx/index/index_1/index_5_do', 'wx\index\index_1@index_5_do');
+

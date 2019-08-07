@@ -65,6 +65,13 @@
                     </dl>
                 </li>
 
+                <li class="layui-nav-item">
+                    <a href="javascript:;">微信测试</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="{{url('wx/index/index_1/index_5')}}">微信上传素材</a></dd>
+                    </dl>
+                </li>
+
 
             </ul>
         </div>
