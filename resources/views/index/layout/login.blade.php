@@ -68,7 +68,10 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">微信测试</a>
                     <dl class="layui-nav-child">
+                        <dd><a href="{{url('wx/index/index_1/index_3')}}">关注用户展示</a></dd>
                         <dd><a href="{{url('wx/index/index_1/index_5')}}">微信上传素材</a></dd>
+                        <dd><a href="{{url('wx/index/index_1/get_yonghu')}}">用户标签添加</a></dd>
+                        <dd><a href="{{url('wx/index/index_1/get_yonghu_do')}}">用户标签展示</a></dd>
                     </dl>
                 </li>
 

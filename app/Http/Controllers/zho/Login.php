@@ -38,18 +38,6 @@ class Login extends Controller
         $ddd = $ss['ddd']??'';
         $cfd = $ss['cfd']??'';
         if(!empty($ss['cfd'])||!empty($ss['ddd'])){
-
-//            if(!$redis->get('ticket_info')){
-//                $data = json_decode($redis->get('ticket_info'),true);
-//                $datas = $data['data'];
-////                dd($datas);
-//            }else{
-
-
-//                $redis->incr("$ss[cfd]-$ss[ddd]");
-//                $name = $redis->get("$ss[cfd]-$ss[ddd]");
-
-//                $sosuo = $ss['cfd']||$ss['ddd'];
                 $data = DB::table('dd')->where([['cfd','like','%'.$ss['cfd'].'%']])->where([['ddd','like','%'.$ss['ddd'].'%']])->paginate(6);
                 $data = json_decode(json_encode($data),1);
                 $datas = $data['data'];
@@ -57,14 +45,11 @@ class Login extends Controller
                     $redis_info = json_encode($data);
                     $redis->set('ticket_info',$redis_info,3 * 6);
                 }
-//            }
-
             }else{
             $data = DB::table('dd')->paginate(10);
             $data = json_decode(json_encode($data),1);
             $datas = $data['data'];
         }
-//        echo $ss;
         return view('zho/login/select',['datas'=>$datas,'ddd'=>$ddd,'cfd'=>$cfd,'name'=>$name]);
     }
 

@@ -2,11 +2,12 @@
 @section('title','关注用户展示')
 @section('body')
     <center>
-        <h2>信息展示</h2>
-        <h3><a href="{{url('wx/index/index_1/index_2')}}">数据刷新</a></h3>
+        <h2>用户</h2>
+        <form action="{{url('wx/index/index_1/yonghu_insert_do')}}" method="post">
+            @csrf
         <table border>
             <tr>
-{{--                <td>选择</td>--}}
+                <td>选择</td>
                 <td>编号</td>
                 <td>名</td>
                 <td>时间</td>
@@ -16,7 +17,7 @@
             </tr>
             @foreach($data as $v)
                 <tr>
-{{--                    <td><input type="checkbox" name="id_list[]" id="" value="{{$v->id}}"></td>--}}
+                    <td><input type="checkbox" name="id_list[]" id="" value="{{$v->id}}"></td>
                     <td>{{$v->id}}</td>
                     <td>{{$v->ming}}</td>
                     <td>{{date ('Y-m-d H:i:s',$v->add_time)}}</td>
@@ -30,10 +31,13 @@
                     </td>
                     <td>
                         <a href="{{url('wx/index/index_1/index_4',['id'=>$v->id])}}">查看用户详情</a>
-                        <a href="{{url('wx/index/index_1/yonghu_select_1',['id'=>$v->id])}}">查看用户标签</a>
+{{--                        <a href="">查看用户标签</a>--}}
                     </td>
                 </tr>
             @endforeach
         </table>
+            <input type="hidden" name="tagid" value="{{$id}}">
+            <input type="submit" value="添加">
+        </form>
     </center>
 @endsection

@@ -35,24 +35,14 @@ class Index extends Controller
         $redis->incr('add');
         $name = $redis->get('add');
         $value = $request->session()->get('add');
-//        dd($data);
+
         $c_name = $request->all();
-//        var_dump($c_name['c_name']);
         $xm = '';
         if(!empty($c_name['c_name'])){
             $xm = $c_name['c_name'];
-//            dd($xm);
             $data = DB::table('kao')->where('xm','like','%'.$xm.'%')->get();
-//            var_dump(3);
         }else{
-//            dd(1);
             $data = DB::table('kao')->get();
-//            $datas = json_encode($data);
-////            dd($datas);
-//            $redis->incr('asd',$datas);
-//            $name = $redis->get('asd');
-////            var_dump(2);
-//            dd($name);
 
 
         }

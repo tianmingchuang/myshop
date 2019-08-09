@@ -226,7 +226,32 @@ Route::get('/wx/index/index_1/del_temlate', 'wx\index\index_1@del_temlate');
 Route::get('/wx/index/index_1/push_template', 'wx\index\index_1@push_template');
 
 
-//图片  音频   视频  缩略图 上传
+//图片  音频   视频  缩略图 上传素材
 Route::get('/wx/index/index_1/index_5', 'wx\index\index_1@index_5');
 Route::post('/wx/index/index_1/index_5_do', 'wx\index\index_1@index_5_do');
 
+//获取临时素材
+Route::get('/wx/index/index_1/get_source', 'wx\index\index_1@get_source');
+Route::get('/wx/index/index_1/get_sources', 'wx\index\index_1@get_sources');
+
+//获取临时视频素材
+Route::get('/wx/index/index_1/get_video_source', 'wx\index\index_1@get_video_source');
+
+//用户标签管理
+Route::get('/wx/index/index_1/get_yonghu','wx\index\index_1@get_yonghu');
+Route::post('/wx/index/index_1/post_yonghu','wx\index\index_1@post_yonghu');
+Route::get('/wx/index/index_1/get_yonghu_do','wx\index\index_1@get_yonghu_do');
+Route::get('/wx/index/index_1/yonghu_delete/{id}','wx\index\index_1@yonghu_delete');
+Route::get('/wx/index/index_1/yonghu_insert/{id}','wx\index\index_1@yonghu_insert');
+Route::get('/wx/index/index_1/yonghu_select/{id}','wx\index\index_1@yonghu_select');
+Route::get('/wx/index/index_1/yonghu_update/{id}','wx\index\index_1@yonghu_update');
+Route::post('/wx/index/index_1/yonghu_update_do','wx\index\index_1@yonghu_update_do');
+Route::post('/wx/index/index_1/yonghu_select_do','wx\index\index_1@yonghu_select_do');
+Route::post('/wx/index/index_1/yonghu_insert_do','wx\index\index_1@yonghu_insert_do');
+Route::get('/wx/index/index_1/yonghu_select_1/{id}','wx\index\index_1@yonghu_select_1');
+Route::get('/wx/index/index_1/yonghu_xiaoxi/{id}','wx\index\index_1@yonghu_xiaoxi');
+Route::post('/wx/index/index_1/yonghu_xiaoxi_do','wx\index\index_1@yonghu_xiaoxi_do');
+///////////////////////////////////////////////////////
+/// //清零接口调用频次
+Route::get('/wx/index/index_1/aa','wx\index\index_1@aa');
+///////////////////////////////////////////////////////

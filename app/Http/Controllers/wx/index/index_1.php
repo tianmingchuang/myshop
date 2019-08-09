@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use DB;
 use App\Http\Tools\Wechat;
+use Illuminate\Support\Facades\Storage;
 
 class index_1 extends Controller
 {
@@ -189,115 +190,417 @@ class index_1 extends Controller
     //接收
     public function index_5_do(Request $request,Client $client)
     {
+        $upload_type = $request['up_type'];
+        $re = '';
+//        dd($upload_type);
+        if($request->hasFile('image')){
+            //图片
+            $re = $this->wechat->upload_source($upload_type,'image');
+        }elseif($request->hasFile('voice')){
+            //音频
+            $re = $this->wechat->upload_source($upload_type,'voice');
+        }elseif($request->hasFile('video')){
+            //视频
+            $re = $this->wechat->upload_source($upload_type,'video','视频标题','视频描述');
+        }elseif($request->hasFile('thumb')){
+            //缩略图
+            $path = $request->file('thumb')->store('wechat/thumb');
+        }
+        echo $re;
+        dd();
+//        $client = new Client();
+//        $data = $request->all('up_type');
+////        dd($data);
+//        $data = $data['up_type'];
+////        dd($data);
+//        if($data==2){
+////            dd(2);
+//            $path = $request->file('image')->store('index_5');
+//            $path = './storage/' . $path;
+//            $url = 'https://api.weixin.qq.com/cgi-bin/material/add_news?access_token='. $this->wechat->index_1() ;
+////            $url = 'https://api.weixin.qq.com/cgi-bin/material/add_material?access_token='.$this->get_access_token().'&type='.$type;
+//        }else if($data==1) {
 //
-//        $upload_type = $request['up_type'];
-//        $re = '';
-//        if($request->hasFile('image')){
-//            //图片类型
-//            $re = $this->wechat->upload_source($upload_type,'image');
-//        }elseif($request->hasFile('voice')){
-//            //音频类型
-//            //保存文件
-//            $re = $this->wechat->upload_source($upload_type,'voice');
-//        }elseif($request->hasFile('video')){
-//            //视频
-//            //保存文件
-//            $re = $this->wechat->upload_source($upload_type,'video','视频标题','视频描述');
-//        }elseif($request->hasFile('thumb')){
-//            //缩略图
-//            $path = $request->file('thumb')->store('wechat/thumb');
+////            dd(1);
+//            if ($request->hasFile('image')) {
+////            dd($request->file('image'));
+//                $path = $request->file('image')->store('index_5');
+//                $path = './storage/' . $path;
+////            dd($path);
+//                $url = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token=' . $this->wechat->index_1() . '&type=image';
+////            dd($url);
+//                $res = $client->request('POST', $url, [
+//                    'multipart' => [
+//                        [
+//                            'name' => 'username',
+//                            'contents' => 'xiaojiu'
+//                        ], [
+//                            'name' => 'media',
+//                            'contents' => fopen(realpath($path), 'r')
+//                        ]
+//                    ]
+//                ]);
+////            dd($res);
+//                //返回的信息
+//                echo $res->getBody();
+//                unlink($path);
+//                dd();
+//            } else if ($request->hasFile('voice')) {
+//                //语音上传
+////            dd($request->file('voice'));
+//                $img_file = $request->file('voice');
+//                $file_ext = $img_file->getClientOriginalExtension();
+//                //新的重命名
+//                $new_file_name = time() . rand(1000, 9999) . '.' . $file_ext;
+////            dd($new_file_name);
+//                $save_file_name = $img_file->storeAs('index_5', $new_file_name);
+//                $path = './storage/' . $save_file_name;
+//                $url = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token=' . $this->wechat->index_1() . '&type=voice';
+//                $response = $client->request('POST', $url, [
+//                    'multipart' => [
+//                        [
+//                            'name' => 'media',
+//                            'contents' => fopen(realpath($path), 'r')
+//                        ],
+//                    ]
+//                ]);
+////            dd($res);
+//                echo $response->getBody();
+//                unlink($path);
+//                dd();
+//            } else if ($request->hasFile('video')) {
+//                //上传视频
+////            dd($request->hasFile('video'));
+//                $img_file = $request->file('video');
+//                $file_ext = $img_file->getClientOriginalExtension();
+//                //新名
+//                $new_file_name = time() . rand(1000, 9999) . '.' . $file_ext;
+//                $save_file_name = $img_file->storeAs('index_5', $new_file_name);
+//                $path = './storage/' . $save_file_name;
+//                $url = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token=' . $this->wechat->index_1() . '&type=video';
+//                $response = $client->request('POST', $url, [
+//                    'multipart' => [
+//                        [
+//                            'name' => 'media',
+//                            'contents' => fopen(realpath($path), 'r')
+//                        ]
+//                    ]
+//                ]);
+//                echo $response->getBody();
+//                unlink($path);
+//                dd();
+//            } else if ($request->hasFile('thumb')) {
+////            dd($request->hasFile('thumb'));
+//            }
 //        }
-//        echo $re;
-//        dd();
+    }
 
+    //获取临时素材
+    public function get_source()
+    {
+        $media_id = "fD2slPOaReZOloT_ykvEV1lOxnb7yzONvX2Y0DfqG2YNq2PlGvXeJci_etPGyYD_";
+//        $media_id = 'PTIrULXFMhz7CI4hfgR3h18YXwIxEju309xq6utOKTs';
+        $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->wechat->index_1().'&media_id='.$media_id;
+//        dd($url);
         $client = new Client();
-        $data = $request->all('up_type');
-//        dd($data);
-        $data = $data['up_type'];
-//        dd($data);
-        if($data==2){
-//            dd(2);
-            $path = $request->file('image')->store('index_5');
-            $path = './storage/' . $path;
-            $url = 'https://api.weixin.qq.com/cgi-bin/material/add_news?access_token='. $this->wechat->index_1() ;
-//            $url=  'https://api.weixin.qq.com/cgi-bin/media/upload?access_token=' . $this->get_access_token().'&type='.$type;
-//            $url = 'https://api.weixin.qq.com/cgi-bin/material/add_material?access_token='.$this->get_access_token().'&type='.$type;
-        }else if($data==1) {
+        $response = $client->get($url);
+//        dd($response);
+        //获取文件名
+        $file_info = $response->getHeader('Content-disposition');
+//        dd($file_info);
+        $file_name = substr(rtrim($file_info[0],'"'),-20);
+        $path = 'wechat/image/'.$file_name;
+        $res = Storage::disk('local')->put($path,$response->getBody());
+        echo env('APP_URL').'/storage/'.$path;
+        dd($res);
+    }
+    //获取临时视频文件
+    public function get_video_source()
+    {
+        $media_id = "e5Z_WbPT_2s5acwidFjjYxn4XcdokGHtqy_QTkw8KBbayWY_vULZcg2EHo3sxACG";
+        $url = 'http://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->wechat->index_1().'&media_id='.$media_id;
+        $client = new Client();
+        $responae = $client->get($url);
+//        dd(json_decode($responae->getBody(),1));
+        $video_url = json_decode($responae->getBody(),1)['video_url'];
+//        dd($video_url);
+        $file_name = explode('/',parse_url($video_url)['path'])[2];
+        $opts = array(
+            'http' => array(
+                'method' => 'GET',
+                'timeout' => 3
+            )
+        );
+        $context = stream_context_create($opts);
+////        dd($opts);
+        $read = file_get_contents($video_url,false, $context);
+////        dd($read);
+        $res = file_put_contents('./storage/wechat/video/'.$file_name,$read);
+        var_dump($res);
+        dd();
+    }
+//    public function get_sources()
+//    {
+////        $media_id = '3aQvqKaKoOglqWYQ2OPXN9LxDHH6fgAv8-U6gNvlAmMjezpN-rwUJidpgR4ZEcqO';
+//        $media_id = 'PTIrULXFMhz7CI4hfgR3h18YXwIxEju309xq6utOKTs';
+//        $url = 'https://api.weixin.qq.com/cgi-bin/material/get_material?access_token='.$this->wechat->index_1().'&media_id='.$media_id;
+////        dd($url);
+//        $client = new Client();
+//        $response = $client->get($url);
+////        dd($response);
+//        //获取文件名
+//        $file_info = $response->getHeader('Content-disposition');
+////        dd($file_info);
+//        $file_name = substr(rtrim($file_info[0],'"'),-20);
+//        $path = 'wechat/image/'.$file_name;
+//        $res = Storage::disk('local')->put($path,$response->getBody());
+//        echo env('APP_URL').'/storage/'.$path;
+//        dd($res);
+//    }
 
-//            dd(1);
-            if ($request->hasFile('image')) {
-//            dd($request->file('image'));
-                $path = $request->file('image')->store('index_5');
-                $path = './storage/' . $path;
-//            dd($path);
-                $url = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token=' . $this->wechat->index_1() . '&type=image';
-//            dd($url);
-                $res = $client->request('POST', $url, [
-                    'multipart' => [
-                        [
-                            'name' => 'username',
-                            'contents' => 'xiaojiu'
-                        ], [
-                            'name' => 'media',
-                            'contents' => fopen(realpath($path), 'r')
-                        ]
-                    ]
-                ]);
-//            dd($res);
-                //返回的信息
-                echo $res->getBody();
-                unlink($path);
-                dd();
-            } else if ($request->hasFile('voice')) {
-                //语音上传
-//            dd($request->file('voice'));
-                $img_file = $request->file('voice');
-                $file_ext = $img_file->getClientOriginalExtension();
-                //新的重命名
-                $new_file_name = time() . rand(1000, 9999) . '.' . $file_ext;
-//            dd($new_file_name);
-                $save_file_name = $img_file->storeAs('index_5', $new_file_name);
-                $path = './storage/' . $save_file_name;
-                $url = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token=' . $this->wechat->index_1() . '&type=voice';
-                $response = $client->request('POST', $url, [
-                    'multipart' => [
-                        [
-                            'name' => 'media',
-                            'contents' => fopen(realpath($path), 'r')
-                        ],
-                    ]
-                ]);
-//            dd($res);
-                echo $response->getBody();
-                unlink($path);
-                dd();
-            } else if ($request->hasFile('video')) {
-                //上传视频
-//            dd($request->hasFile('video'));
-                $img_file = $request->file('video');
-                $file_ext = $img_file->getClientOriginalExtension();
-                //新名
-                $new_file_name = time() . rand(1000, 9999) . '.' . $file_ext;
-                $save_file_name = $img_file->storeAs('index_5', $new_file_name);
-                $path = './storage/' . $save_file_name;
-                $url = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token=' . $this->wechat->index_1() . '&type=video';
-                $response = $client->request('POST', $url, [
-                    'multipart' => [
-                        [
-                            'name' => 'media',
-                            'contents' => fopen(realpath($path), 'r')
-                        ]
-                    ]
-                ]);
-                echo $response->getBody();
-                unlink($path);
-                dd();
-            } else if ($request->hasFile('thumb')) {
-//            dd($request->hasFile('thumb'));
+    //用户标签管理
+    public function get_yonghu()
+    {
+        return view('wx/index/index_1/get_yonghu');
+    }
+    public function post_yonghu(Request $request)
+    {
+        $name = $request->all()['name'];
+//        dd($name);
+        $index_1 = $this->wechat->index_1();
+//        dd($index_1);
+        $url = 'https://api.weixin.qq.com/cgi-bin/tags/create?access_token='.$index_1;
+//        dd($url);
+        $data = [
+            "tag" => ["name" => $name]
+        ];
+//        dd($data);
+        $re = $this->wechat->post($url,json_encode($data,JSON_UNESCAPED_UNICODE));
+//        dd($re);
+        //如果已有了创建的标签 重命名 返回45157
+        $re = json_decode($re,1);
+//        dd($re);
+        if(array_key_exists('tag',$re)){
+            return redirect('wx/index/index_1/get_yonghu_do');
+        }else{
+            echo '反生未知错误标签创建失败';
+        }
+    }
+
+    public function get_yonghu_do()
+    {
+        $url = 'https://api.weixin.qq.com/cgi-bin/tags/get?access_token='.$this->wechat->index_1();
+        $data = file_get_contents($url);
+        $data = json_decode($data,1);
+        $data = $data['tags'];
+//        dd($data);
+        return view('wx/index/index_1/get_yonghu_do',['data'=>$data]);
+    }
+    //标签删除
+    public function yonghu_delete($id)
+    {
+//        $name = $request->all();
+//        dd($id);
+        $url = 'https://api.weixin.qq.com/cgi-bin/tags/delete?access_token='.$this->wechat->index_1();
+        $data = [
+            'tag' => ['id'=>$id]
+        ];
+        $re = $this->wechat->post($url,json_encode($data));
+        $res = json_decode($re);
+//        dd($res);
+        if($res->errcode == 0){
+            return redirect('wx/index/index_1/get_yonghu_do');
+        }else{
+          echo "未知错误删除失败";
+        }
+    }
+    //用户标签添加
+    public function yonghu_insert($id)
+    {
+//        dd($id);
+        $data = DB::connection('access')->table('wechat_openid')->get();
+        return view('wx/index/index_1/yonghu_insert',['data'=>$data,'id'=>$id]);
+    }
+    public function yonghu_insert_do(Request $request)
+    {
+        $data = $request->all();
+        $tagid = $data['tagid'];
+        $data = DB::connection('access')->table('wechat_openid')->whereIn('id',$data['id_list'])->get();
+//        dd($tagid);
+        $data1 = [];
+        foreach($data as $v){
+            $data1[] = $v->openid;
+        }
+//        dd($data1);
+        $url = 'https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token='.$this->wechat->index_1();
+        $data2 = [
+          'openid_list' => $data1,
+            'tagid' => $tagid,
+        ];
+//        dd($data2);
+        $data3 = $this->wechat->post($url,json_encode($data2));
+        $res = json_decode($data3,1);
+//        dd($res);
+        if($res['errcode'] == 0){
+            return redirect('wx/index/index_1/get_yonghu_do');
+        }else{
+            echo "未知错误删除失败";
+        }
+    }
+    //查看用户标签
+    public function yonghu_select_1($id)
+    {
+//        dd($id);
+        $data = DB::connection('access')->table('wechat_openid')->where('id','=',$id)->first();
+//        dd($data);
+        $url = 'https://api.weixin.qq.com/cgi-bin/tags/getidlist?access_token='.$this->wechat->index_1();
+        $data1 = [
+          'openid' => $data->openid
+        ];
+//        dd($data1);
+        $res = $this->wechat->post($url,json_encode($data1));
+        $data2 = json_decode($res,1)['tagid_list'];
+//       dd($data2);
+        $url1 = 'https://api.weixin.qq.com/cgi-bin/tags/get?access_token='.$this->wechat->index_1();
+        $re = file_get_contents($url1);
+//        dd($re);
+        $tag_info = json_decode($re,1)['tags'];
+//        dd($tag_info);
+        $vo1[] = '';
+        foreach($data2 as $v){
+//            echo $v;
+            foreach($tag_info as $vo){
+                if($vo['id'] == $v){
+//                    echo $vo['name'];
+                    $vo1[] = $vo['name'];
+                }
             }
+        }
+
+//        dd($vo1);
+//        echo $vo;
+        return view('wx/index/index_1/yonghu_select_1',['vo'=>$vo1,'openid'=>$data->openid]);
+    }
+
+    //获取标签下面的用户
+    public function yonghu_select($id)
+    {
+//        dd($id);
+        $url = 'https://api.weixin.qq.com/cgi-bin/user/tag/get?access_token='.$this->wechat->index_1();
+        $date = [
+            'tagid' => $id,
+        ];
+        $data = $this->wechat->post($url,json_encode($date));
+        $res = json_decode($data,1);
+//        dd($res);
+        if($res['count']==0){
+            echo '此标签下没有用户';die;
+        }
+        $res = $res['data']['openid'];
+//        $data1 = DB::connection('access')->table('wechat_openid')->get();
+//        dd($data1);
+        return view('wx/index/index_1/yonghu_select',['data'=>$res,'id'=>$id]);
+    }
+    //批量删除标签用户
+    public function yonghu_select_do(Request $request)
+    {
+        $data = $request->all();
+//        dd($data);
+        $tagid = $data['tagid'];
+        $openid = $data['openid'];
+//        dd($openid);
+        $url = 'https://api.weixin.qq.com/cgi-bin/tags/members/batchuntagging?access_token='.$this->wechat->index_1();
+        $data = [
+          'openid_list' => $openid,
+            'tagid' => $tagid
+        ];
+//        dd($data);
+        $res = $this->wechat->post($url,json_encode($data));
+//        dd($res);
+        $res = json_decode($res,1);
+//        dd($res);
+        if($res['errcode'] == 0){
+            echo "<script>history.go(-1)</script>";
+        }else{
+            echo "未知错误删除失败";
+        }
+    }
+    //修改标签名
+    public function yonghu_update(Request $request,$id)
+    {
+//        dd($request->all()['name']);
+        return view('wx/index/index_1/yonghu_update',['id'=>$id,'name'=>$request->all()['name']]);
+    }
+    public function yonghu_update_do(Request $request)
+    {
+        $data = $request->all();
+//        dd($data['id']);
+        $url = 'https://api.weixin.qq.com/cgi-bin/tags/update?access_token='.$this->wechat->index_1();
+        $datas = [
+          'tag' => [
+              'id' => $data['id'],
+              'name' => $data['name']
+          ]
+        ];
+        $res = $this->wechat->post($url,json_encode($datas,JSON_UNESCAPED_UNICODE));
+        $res = json_decode($res,1);
+//        dd($res);
+        if($res['errcode'] == 0){
+            return redirect('wx/index/index_1/get_yonghu_do');
+        }else{
+            echo "未知错误修改失败";
+        }
+    }
+    //标签消息推送
+    public function yonghu_xiaoxi($id)
+    {
+        return view('wx/index/index_1/yonghu_xiaoxi',['id'=>$id]);
+    }
+    public function yonghu_xiaoxi_do(Request $request)
+    {
+        $data = $request->all();
+//        dd($data['tag_id']);
+        $url = 'https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token='.$this->wechat->index_1();
+        $data = [
+            "filter" => [
+                "is_to_all" => false,
+                "tag_id" => $data['tag_id']
+                    ],
+            "text" => [
+                "content" => $data['desc']
+                    ],
+            "msgtype" => "text"
+        ];
+        $res = $this->wechat->post($url,json_encode($data,JSON_UNESCAPED_UNICODE));
+        $res = json_decode($res,1);
+//        dd($res);
+        if($res['errcode'] == 0){
+            return redirect('wx/index/index_1/get_yonghu_do');
+        }else{
+            echo "未知错误修改失败";
         }
     }
 
 
-    //
+
+
+
+
+
+
+
+
+
+
+//////////清零接口调用频次
+    public function aa()
+    {
+        $url = 'https://api.weixin.qq.com/cgi-bin/clear_quota?access_token='.$this->wechat->index_1();
+        $data = [
+          'appid' => env('WECHAT_APPID'),
+        ];
+        $datas = $this->wechat->post($url,json_encode($data));
+//        dd(json_decode($datas));
+
+    }
 }

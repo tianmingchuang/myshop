@@ -6,7 +6,18 @@
  * Time: 10:37
  */
 namespace  App\Http\Tools;
+use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 class Wechat{
+
+    public  $request;
+    public  $client;
+    public function __construct(Request $request,Client $client)
+    {
+        $this->request = $request;
+        $this->client = $client;
+    }
+
     public function wechat_user_info($openid){
         $access_token = $this->get_access_token();
         $wechat_user = file_get_contents("https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$access_token."&openid=".$openid."&lang=zh_CN");
@@ -65,9 +76,35 @@ class Wechat{
     }
 
     //微信上传素材资源
-    public function update_source($up_type , $type , $title='' , $desc='')
-    {
+    public function upload_source($up_type,$type,$title='',$desc=''){
         $file = $this->request->file($type);
-        dd($file);
+//        dd($file);
+        $file_ext = $file->getClientOriginalExtension();
+        $new_file_name = time().rand(1000,9999). '.'.$file_ext;
+        $save_file_path = $file->storeAs('index_5',$new_file_name);
+        $path = './storage/'.$save_file_path;
+        if($up_type  == 1){
+            $url='https://api.weixin.qq.com/cgi-bin/media/upload?access_token=' . $this->index_1().'&type='.$type;
+        }elseif($up_type == 2){
+            $url = 'https://api.weixin.qq.com/cgi-bin/material/add_material?access_token='.$this->index_1().'&type='.$type;
+        }
+        $multipart = [
+            [
+                'name'     => 'media',
+                'contents' => fopen(realpath($path), 'r')
+            ],
+        ];
+        if($type == 'video' && $up_type == 2){
+            $multipart[] = [
+                'name'     => 'description',
+                'contents' => json_encode(['title'=>$title,'introduction'=>$desc])
+            ];
+        }
+        $response = $this->client->request('POST',$url,[
+            'multipart' => $multipart
+        ]);
+        $body = $response->getBody();
+        unlink($path);
+        return $body;
     }
 }
