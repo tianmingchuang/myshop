@@ -424,6 +424,7 @@ class index_1 extends Controller
     public function yonghu_insert_do(Request $request)
     {
         $data = $request->all();
+//        dd($data);
         $tagid = $data['tagid'];
         $data = DB::connection('access')->table('wechat_openid')->whereIn('id',$data['id_list'])->get();
 //        dd($tagid);
@@ -581,12 +582,39 @@ class index_1 extends Controller
         }
     }
 
+    public function event()
+    {
+        echo $_GET['echostr'];
+        die();
+    }
 
 
 
 
 
 
+////////////生成带参数的二维码
+    public function erwma()
+    {
+        $url = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token='.$this->wechat->index_1();
+//        dd($url);
+        $data = [
+          'expire_seconds' => 3600,
+            'action_name'  => 'QR_SCENE',
+            'action_info' => [
+                'scene' => [
+                    'scene_id' => 123,
+                ]
+            ]
+        ];
+//        dd($data);
+        $res = $this->wechat->post($url,json_encode($data));
+        $res = json_decode($res,1)['ticket'];
+//        dd($res);
+        $url1 = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$res;
+        header("location:$url1");
+//        dd($url1);
+    }
 
 
 

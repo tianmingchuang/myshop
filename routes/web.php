@@ -189,69 +189,76 @@ Route::group(['middleware' => ['login_5']], function(){
 Route::get('/zho/login_6/index', 'zho\Login_6@index');
 
 
-Route::get('/kao/index/login', 'kao\index@login');
-Route::post('/kao/index/login_do', 'kao\index@login_do');
+Route::get('/kao/index/login', 'kao\Index@login');
+Route::post('/kao/index/login_do', 'kao\Index@login_do');
 
 Route::group(['middleware' => ['kao']], function() {
-    Route::get('/kao/index/index', 'kao\index@index');
-    Route::post('/kao/index/index_do', 'kao\index@index_do');
-    Route::get('/kao/index/index_1/{id}', 'kao\index@index_1');
+    Route::get('/kao/index/index', 'kao\Index@index');
+    Route::post('/kao/index/index_do', 'kao\Index@index_do');
+    Route::get('/kao/index/index_1/{id}', 'kao\Index@index_1');
 
 });
 
-Route::post('/wx/index/index/index', 'wx\index\index@index');
+Route::post('/wx/index/index/index', 'wx\index\Index@index');
 
 
-Route::get('/wx/index/index_1/index', 'wx\index\index_1@index');
-Route::get('/wx/index/index_1/index_1', 'wx\index\index_1@index_1');
-Route::get('/wx/index/index_1/index_2', 'wx\index\index_1@index_2');
-Route::get('/wx/index/index_1/index_3', 'wx\index\index_1@index_3');
-Route::get('/wx/index/index_1/index_4/{id}', 'wx\index\index_1@index_4');
+Route::get('/wx/index/index_1/index', 'wx\index\Index_1@index');
+Route::get('/wx/index/index_1/index_1', 'wx\index\Index_1@index_1');
+Route::get('/wx/index/index_1/index_2', 'wx\index\Index_1@index_2');
+Route::get('/wx/index/index_1/index_3', 'wx\index\Index_1@index_3');
+Route::get('/wx/index/index_1/index_4/{id}', 'wx\index\Index_1@index_4');
 
 
 //微信授权注册登录
-Route::get('/wx/index/index_1/login', 'wx\index\index_1@login');
-Route::get('/wx/index/index_1/code', 'wx\index\index_1@code');
-Route::get('/wx/index/index_1/code_1', 'wx\index\index_1@code_1');
+Route::get('/wx/index/index_1/login', 'wx\index\Index_1@login');
+Route::get('/wx/index/index_1/code', 'wx\index\Index_1@code');
+Route::get('/wx/index/index_1/code_1', 'wx\index\Index_1@code_1');
 
 //模板内容获取
-Route::get('/wx/index/index_1/template_list', 'wx\index\index_1@template_list');
+Route::get('/wx/index/index_1/template_list', 'wx\index\Index_1@template_list');
 
 
 //模板删除
-Route::get('/wx/index/index_1/del_temlate', 'wx\index\index_1@del_temlate');
+Route::get('/wx/index/index_1/del_temlate', 'wx\index\Index_1@del_temlate');
 
 
 //模板消息推送
-Route::get('/wx/index/index_1/push_template', 'wx\index\index_1@push_template');
+Route::get('/wx/index/index_1/push_template', 'wx\index\Index_1@push_template');
 
 
 //图片  音频   视频  缩略图 上传素材
-Route::get('/wx/index/index_1/index_5', 'wx\index\index_1@index_5');
-Route::post('/wx/index/index_1/index_5_do', 'wx\index\index_1@index_5_do');
+Route::get('/wx/index/index_1/index_5', 'wx\index\Index_1@index_5');
+Route::post('/wx/index/index_1/index_5_do', 'wx\index\Index_1@index_5_do');
 
 //获取临时素材
-Route::get('/wx/index/index_1/get_source', 'wx\index\index_1@get_source');
-Route::get('/wx/index/index_1/get_sources', 'wx\index\index_1@get_sources');
+Route::get('/wx/index/index_1/get_source', 'wx\index\Index_1@get_source');
+Route::get('/wx/index/index_1/get_sources', 'wx\index\Index_1@get_sources');
 
 //获取临时视频素材
-Route::get('/wx/index/index_1/get_video_source', 'wx\index\index_1@get_video_source');
+Route::get('/wx/index/index_1/get_video_source', 'wx\index\Index_1@get_video_source');
 
 //用户标签管理
-Route::get('/wx/index/index_1/get_yonghu','wx\index\index_1@get_yonghu');
-Route::post('/wx/index/index_1/post_yonghu','wx\index\index_1@post_yonghu');
-Route::get('/wx/index/index_1/get_yonghu_do','wx\index\index_1@get_yonghu_do');
-Route::get('/wx/index/index_1/yonghu_delete/{id}','wx\index\index_1@yonghu_delete');
-Route::get('/wx/index/index_1/yonghu_insert/{id}','wx\index\index_1@yonghu_insert');
-Route::get('/wx/index/index_1/yonghu_select/{id}','wx\index\index_1@yonghu_select');
-Route::get('/wx/index/index_1/yonghu_update/{id}','wx\index\index_1@yonghu_update');
-Route::post('/wx/index/index_1/yonghu_update_do','wx\index\index_1@yonghu_update_do');
-Route::post('/wx/index/index_1/yonghu_select_do','wx\index\index_1@yonghu_select_do');
-Route::post('/wx/index/index_1/yonghu_insert_do','wx\index\index_1@yonghu_insert_do');
-Route::get('/wx/index/index_1/yonghu_select_1/{id}','wx\index\index_1@yonghu_select_1');
-Route::get('/wx/index/index_1/yonghu_xiaoxi/{id}','wx\index\index_1@yonghu_xiaoxi');
-Route::post('/wx/index/index_1/yonghu_xiaoxi_do','wx\index\index_1@yonghu_xiaoxi_do');
+Route::get('/wx/index/index_1/get_yonghu','wx\index\Index_1@get_yonghu');
+Route::post('/wx/index/index_1/post_yonghu','wx\index\Index_1@post_yonghu');
+Route::get('/wx/index/index_1/get_yonghu_do','wx\index\Index_1@get_yonghu_do');
+Route::get('/wx/index/index_1/yonghu_delete/{id}','wx\index\Index_1@yonghu_delete');
+Route::get('/wx/index/index_1/yonghu_insert/{id}','wx\index\Index_1@yonghu_insert');
+Route::get('/wx/index/index_1/yonghu_select/{id}','wx\index\Index_1@yonghu_select');
+Route::get('/wx/index/index_1/yonghu_update/{id}','wx\index\Index_1@yonghu_update');
+Route::post('/wx/index/index_1/yonghu_update_do','wx\index\Index_1@yonghu_update_do');
+Route::post('/wx/index/index_1/yonghu_select_do','wx\index\Index_1@yonghu_select_do');
+Route::post('/wx/index/index_1/yonghu_insert_do','wx\index\Index_1@yonghu_insert_do');
+Route::get('/wx/index/index_1/yonghu_select_1/{id}','wx\index\Index_1@yonghu_select_1');
+Route::get('/wx/index/index_1/yonghu_xiaoxi/{id}','wx\index\Index_1@yonghu_xiaoxi');
+Route::post('/wx/index/index_1/yonghu_xiaoxi_do','wx\index\Index_1@yonghu_xiaoxi_do');
+
+Route::get('/wx/index/index_1/event','wx\index\Index_1@event');
+
+//////////////////////////////////////////////////////
+/// 生成带参数的二维码
+Route::get('/wx/index/index_1/erwma','wx\index\Index_1@erwma');
+//////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 /// //清零接口调用频次
-Route::get('/wx/index/index_1/aa','wx\index\index_1@aa');
+Route::get('/wx/index/index_1/aa','wx\index\Index_1@aa');
 ///////////////////////////////////////////////////////

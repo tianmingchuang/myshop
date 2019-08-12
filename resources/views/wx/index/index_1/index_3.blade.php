@@ -4,6 +4,7 @@
     <center>
         <h2>信息展示</h2>
         <h3><a href="{{url('wx/index/index_1/index_2')}}">数据刷新</a></h3>
+        <h3><a href="{{url('wx/index/index_1/erwma')}}">生成二维码</a></h3>
         <table border>
             <tr>
 {{--                <td>选择</td>--}}
