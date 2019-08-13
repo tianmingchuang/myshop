@@ -9,11 +9,11 @@
                 <td>关注时间</td>
             </tr>
             @foreach($data as $v)
-            <tr>
-                <td>{{$v->id}}</td>
-                <td>{{$v->openid}}</td>
-                <td>{{date('Y-m-d H:i:s',$v->add_time)}}</td>
-            </tr>
+                <tr>
+                    <td>{{$v->id}}</td>
+                    <td>{{$v->openid}}</td>
+                    <td>{{date('Y-m-d H:i:s',$v->add_time)}}</td>
+                </tr>
             @endforeach
         </table>
     </center>

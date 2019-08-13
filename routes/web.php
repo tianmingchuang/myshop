@@ -261,6 +261,9 @@ Route::get('/wx/index/index_1/erwma','wx\index\index_1@erwma');
 Route::get('/wx/index/index_1/erwmas','wx\index\index_1@erwmas');
 Route::get('/wx/index/index_1/erwmas_do/{id}','wx\index\index_1@erwmas_do');
 Route::get('/wx/index/index_1/erwmas_do_1/{id}','wx\index\index_1@erwmas_do_1');
+//添加二维码推广商户
+Route::get('/wx/index/index_1/shanghu','wx\index\index_1@shanghu');
+Route::post('/wx/index/index_1/shanghu_do','wx\index\index_1@shanghu_do');
 //////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 /// //清零接口调用频次

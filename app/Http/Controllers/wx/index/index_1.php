@@ -677,6 +677,7 @@ class index_1 extends Controller
         $res = DB::connection('access')->table('user')->where('id','=',$id)->update(['agent_code'=>$re['ticket']]);
 //        dd($res);/
         $url1 = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$re['ticket'];
+//        dd($url1);
         $client = new Client();
         $response = $client->get($url1);
         //获取文件名
@@ -689,7 +690,7 @@ class index_1 extends Controller
 //        dd($path);
         $re1 = Storage::disk('local')->put($path,$response->getBody());
         $qrcode_url = env('APP_URL').'/storage/'.$path;
-        $res1 = DB::connection('access')->table('user')->where('id','=',$id)->update(['qrcode_url'=>$qrcode_url]);
+        $res1 = DB::connection('access')->table('user')->where('id','=',$id)->update(['qrcode_url'=>$url1]);
         if ($res&&$res1){
             return redirect('wx/index/index_1/erwmas');
         }else{
@@ -704,6 +705,33 @@ class index_1 extends Controller
 //        dd($data);
         return view('wx/index/index_1/erwmas_do_1',['data'=>$data]);
     }
+    //添加二维码推广商户
+    public function shanghu()
+    {
+        return view('wx/index/index_1/shanghu');
+    }
+    public function shanghu_do(Request $request)
+    {
+        $data = $request->all();
+//        dd($data);
+        $date = DB::connection('access')->table('user')->insert(['name'=>$data['name']]);
+        if($date){
+            return redirect('wx/index/index_1/erwmas');
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public function chakanerwma($id)
