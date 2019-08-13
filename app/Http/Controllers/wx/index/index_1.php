@@ -603,12 +603,12 @@ class index_1 extends Controller
                         $data1 = DB::connection('access')->table('user_agent')->where(['uid'=>$agent_code,'openid'=>$xml['FromUserName']])->first();
 //                        dd($data1);
                         if(empty($data1)){
-                            $data2 = DB::connection('access')->table('user_agent')->insert([
-                                    'uid'=>$agent_code,
-                                    'openid' => $xml['FromUserName'],
-                                    'add_time' => time()
-                                ]);
-                            dd($data2);
+                            $data2 = DB::connection('access')->table('user_agent')->insert(['uid'=>$agent_code, 'openid' => $xml['FromUserName'], 'add_time' => time()]);
+//                            dd($data2);
+                            $data3 = DB::connection('access')->table('user_agent')->where('uid','=',$agent_code)->count();
+//                            dd($data3);
+                            $data4 = DB::connection('access')->table('user')->where('id','=',$agent_code)->update(['agent'=>$data3]);
+//                            dd($data4);
                         }
                     }
                 }
