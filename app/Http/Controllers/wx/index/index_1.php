@@ -582,11 +582,123 @@ class index_1 extends Controller
         }
     }
 
+    //自动回复接收普通消息
     public function event()
     {
-        echo $_GET['echostr'];
-        die();
+//        echo $_GET['echostr'];
+//        die(stash);
+        $data = file_get_contents("php://input");
+//        dd($data);
+        $xml = simplexml_load_string($data,'SimpleXMLElement',LIBXML_NOCDATA);
+//        dd($xml);
+        $xml = (array)$xml;     //转化成数组
+//        dd($xml);
+        $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
+        file_put_contents(storage_path('logs/wx_event.log'),$log_str,FILE_APPEND);
+        if ($xml['MsgType'] == 'event'){
+                if($xml['Event'] == 'subscribe'){
+                    if(isset($xml['EventKey'])){
+                        $agent_code = explode('_',$xml['EventKey'])[1];
+//                        dd($agent_code);
+                        $data1 = DB::connection('access')->table('user_agent')->where(['uid'=>$agent_code,'openid'=>$xml['FromUserName']])->first();
+//                        dd($data1);
+                        if(empty($data1)){
+                            $data2 = DB::connection('access')->table('user_agent')->insert([
+                                    'uid'=>$agent_code,
+                                    'openid' => $xml['FromUserName'],
+                                    'add_time' => time()
+                                ]);
+                            dd($data2);
+                        }
+                    }
+                }
+        }else if ($xml['MsgType'] == 'text'){
+//            \Log::Info(json_encode($xml));
+            $message = '你好!';
+            $xml_str = '<xml>
+                    <ToUserName><![CDATA['.$xml['FromUserName'].']]>
+                    </ToUserName><FromUserName><![CDATA['.$xml['ToUserName'].']]>
+                    </FromUserName>
+                        <CreateTime>'.time().'</CreateTime>
+                        <MsgType><![CDATA[text]]></MsgType>
+                        <Content><![CDATA['.$message.']]></Content>
+                     </xml>';
+            echo $xml_str;
+        }
+
+
     }
+    
+    //生成带参数的二维码
+    public function erwmas()
+    {
+//        echo 1;
+        $data = DB::connection('access')->table('user')->get();
+//        dd($data);
+        return view('wx/index/index_1/erwmas',['data'=>$data]);
+    }
+
+    public function erwmas_do($id)
+    {
+//        dd($id);
+        $url = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token='.$this->wechat->index_1();
+        $data =  [
+//            'action_name' => 'QR_LIMIT_STR_SCENE',
+//            'action_info' => [
+//                'scene' => [
+//                    'scene_str' => $id
+//                ]
+//            ]
+
+            'expire_seconds' => 3600 * 30,
+            'action_name'  => 'QR_STR_SCENE',
+            'action_info' => [
+                'scene' => [
+                    'scene_str' => $id,
+        ]
+    ]
+
+        ];
+//        dd($data);
+        $re = $this->wechat->post($url,json_encode($data));
+        $re = json_decode($re,1);
+//        dd($re);
+        $res = DB::connection('access')->table('user')->where('id','=',$id)->update(['agent_code'=>$re['ticket']]);
+//        dd($res);/
+        $url1 = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$re['ticket'];
+        $client = new Client();
+        $response = $client->get($url1);
+        //获取文件名
+        $wjian = $response->getHeaders();
+        $ext = explode('/',$wjian['Content-Type'][0])[1];
+//        dd($ext);
+        $file_name = time().rand(1000,9999).'.'.$ext;
+//        dd($file_name);
+        $path = 'qrcode/'.$file_name;
+//        dd($path);
+        $re1 = Storage::disk('local')->put($path,$response->getBody());
+        $qrcode_url = env('APP_URL').'/storage/'.$path;
+        $res1 = DB::connection('access')->table('user')->where('id','=',$id)->update(['qrcode_url'=>$qrcode_url]);
+        if ($res&&$res1){
+            return redirect('wx/index/index_1/erwmas');
+        }else{
+            echo '失败';
+        }
+    }
+
+    public function erwmas_do_1($id)
+    {
+//        dd($id);
+        $url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$id;
+//        dd($url);
+        header("location:$url");
+    }
+
+    public function erwma_1()
+    {
+        $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect';
+    }
+
 
 
 

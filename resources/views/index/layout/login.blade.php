@@ -72,6 +72,7 @@
                         <dd><a href="{{url('wx/index/index_1/index_5')}}">微信上传素材</a></dd>
                         <dd><a href="{{url('wx/index/index_1/get_yonghu')}}">用户标签添加</a></dd>
                         <dd><a href="{{url('wx/index/index_1/get_yonghu_do')}}">用户标签展示</a></dd>
+                        <dd><a href="{{url('wx/index/index_1/erwmas')}}">二维码</a></dd>
                     </dl>
                 </li>
 
