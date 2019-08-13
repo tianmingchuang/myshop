@@ -600,7 +600,7 @@ class index_1 extends Controller
                     if(isset($xml['EventKey'])){
                         $agent_code = explode('_',$xml['EventKey'])[1];
 //                        dd($agent_code);
-                        $data1 = DB::connection('access')->table('user_agent')->where(['uid'=>$agent_code,'openid'=>$xml['FromUserName']])->first();
+                        $data1 = DB::connection('access')->table('user_agent')->where(['openid'=>$xml['FromUserName']])->first();
 //                        dd($data1);
                         if(empty($data1)){
                             $data2 = DB::connection('access')->table('user_agent')->insert(['uid'=>$agent_code, 'openid' => $xml['FromUserName'], 'add_time' => time()]);
@@ -610,6 +610,17 @@ class index_1 extends Controller
                             $data4 = DB::connection('access')->table('user')->where('id','=',$agent_code)->update(['agent'=>$data3]);
 //                            dd($data4);
                         }
+                        $message = '你好,欢迎关注本服务号!';
+                        $xml_str = '<xml>
+                    <ToUserName><![CDATA['.$xml['FromUserName'].']]>
+                    </ToUserName><FromUserName><![CDATA['.$xml['ToUserName'].']]>
+                    </FromUserName>
+                        <CreateTime>'.time().'</CreateTime>
+                        <MsgType><![CDATA[text]]></MsgType>
+                        <Content><![CDATA['.$message.']]></Content>
+                     </xml>';
+                        echo $xml_str;
+
                     }
                 }
         }else if ($xml['MsgType'] == 'text'){

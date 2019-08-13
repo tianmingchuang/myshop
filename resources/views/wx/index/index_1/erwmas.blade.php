@@ -20,7 +20,8 @@
                         @if($v->qrcode_url=='')
                             尚未生成
                             @else
-                            {{$v->qrcode_url}}
+                            <img src="{{$v->qrcode_url}}" width="40" alt="">
+
                             @endif
                     </td>
                     <td>
