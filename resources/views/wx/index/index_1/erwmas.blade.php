@@ -24,6 +24,9 @@
                             @endif
                     </td>
                     <td>
+
+                            <a href="{{url('wx/index/index_1/erwmas_do_1',['id'=>$v->id])}}">用户推广列表</a>
+
                         @if($v->agent_code=='')
                             <a href="{{url('wx/index/index_1/erwmas_do',['id'=>$v->id])}}">生成二维码</a>
                         @else
@@ -35,6 +38,7 @@
                         @else
                             <a href="{{$v->qrcode_url}}">查看二维码</a>
                         @endif
+
 
                     </td>
                 </tr>

@@ -689,11 +689,19 @@ class index_1 extends Controller
     public function erwmas_do_1($id)
     {
 //        dd($id);
+        $data = DB::connection('access')->table('user_agent')->where('uid','=',$id)->get();
+//        dd($data);
+        return view('wx/index/index_1/erwmas_do_1',['data'=>$data]);
+    }
+
+
+    public function chakanerwma($id)
+    {
+//        dd($id);
         $url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$id;
 //        dd($url);
         header("location:$url");
     }
-
     public function erwma_1()
     {
         $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect';

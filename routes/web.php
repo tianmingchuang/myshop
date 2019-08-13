@@ -256,13 +256,13 @@ Route::post('/wx/index/index_1/event','wx\index\index_1@event');
 
 //////////////////////////////////////////////////////
 /// 生成带参数的二维码
-Route::get('/wx/index/index_1/erwma','wx\index\Index_1@erwma');
+Route::get('/wx/index/index_1/erwma','wx\index\index_1@erwma');
 ///
-Route::get('/wx/index/index_1/erwmas','wx\index\Index_1@erwmas');
-Route::get('/wx/index/index_1/erwmas_do/{id}','wx\index\Index_1@erwmas_do');
-Route::get('/wx/index/index_1/erwmas_do_1/{id}','wx\index\Index_1@erwmas_do_1');
+Route::get('/wx/index/index_1/erwmas','wx\index\index_1@erwmas');
+Route::get('/wx/index/index_1/erwmas_do/{id}','wx\index\index_1@erwmas_do');
+Route::get('/wx/index/index_1/erwmas_do_1/{id}','wx\index\index_1@erwmas_do_1');
 //////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 /// //清零接口调用频次
-Route::get('/wx/index/index_1/aa','wx\index\Index_1@aa');
+Route::get('/wx/index/index_1/aa','wx\index\index_1@aa');
 ///////////////////////////////////////////////////////
