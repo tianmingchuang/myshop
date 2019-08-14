@@ -4,7 +4,7 @@
     <center>
 {{--        <form action="{{url('wx/index/index_1/erwmas_do')}}" method="post">--}}
             <table border>
-                <tr>
+                <tr align="center">
                     <td>编号</td>
                     <td>名称</td>
                     <td>扫描人数</td>
@@ -12,7 +12,7 @@
                     <td>操作</td>
                 </tr>
                 @foreach($data as $v)
-                <tr>
+                <tr align="center">
                     <td>{{$v->id}}</td>
                     <td>{{$v->name}}</td>
                     <td>{{$v->agent}}</td>

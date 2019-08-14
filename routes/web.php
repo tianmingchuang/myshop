@@ -264,7 +264,9 @@ Route::get('/wx/index/index_1/erwmas_do_1/{id}','wx\index\index_1@erwmas_do_1');
 //添加二维码推广商户
 Route::get('/wx/index/index_1/shanghu','wx\index\index_1@shanghu');
 Route::post('/wx/index/index_1/shanghu_do','wx\index\index_1@shanghu_do');
-//////////////////////////////////////////////////////
+
+//微信菜单
+Route::get('/wx/index/index_1/caidan','wx\index\index_1@caidan');
 ///////////////////////////////////////////////////////
 /// //清零接口调用频次
 Route::get('/wx/index/index_1/aa','wx\index\index_1@aa');

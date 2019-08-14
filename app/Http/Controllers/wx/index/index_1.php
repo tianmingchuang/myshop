@@ -643,6 +643,7 @@ class index_1 extends Controller
     //生成带参数的二维码
     public function erwmas()
     {
+//        dd(storage_path('app/public'));
 //        echo 1;
         $data = DB::connection('access')->table('user')->get();
 //        dd($data);
@@ -689,8 +690,9 @@ class index_1 extends Controller
         $path = 'qrcode/'.$file_name;
 //        dd($path);
         $re1 = Storage::disk('local')->put($path,$response->getBody());
+//        dd($re1);
         $qrcode_url = env('APP_URL').'/storage/'.$path;
-        $res1 = DB::connection('access')->table('user')->where('id','=',$id)->update(['qrcode_url'=>$url1]);
+        $res1 = DB::connection('access')->table('user')->where('id','=',$id)->update(['qrcode_url'=>$qrcode_url]);
         if ($res&&$res1){
             return redirect('wx/index/index_1/erwmas');
         }else{
@@ -718,6 +720,46 @@ class index_1 extends Controller
         if($date){
             return redirect('wx/index/index_1/erwmas');
         }
+    }
+    
+    //微信菜单
+    public function caidan()
+    {
+        $url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->wechat->index_1();
+        $data = [
+            "button"=>[
+                [
+                    "type"=>"click",
+                    "name"=>"今日歌曲",
+                    "key"=>"V1001_TODAY_MUSIC"
+                ],
+                [
+                    "name"=>"菜单",
+                    "sub_button"=>[
+                        [
+                            "type"=>"view",
+                            "name"=>"搜索",
+                            "url"=>"http://www.soso.com/"
+                        ],
+                        [
+                            "type"=>"miniprogram",
+                            "name"=>"wxa",
+                            "url"=>"http://mp.weixin.qq.com",
+                            "appid"=>"wx286b93c14bbf93aa",
+                            "pagepath"=>"pages/lunar/index"
+                        ],
+                        [
+                            "type"=>"click",
+                            "name"=>"赞一下我们",
+                            "key"=>"V1001_GOOD"
+                        ]
+                    ]
+                ]
+            ]
+        ];
+        $re = $this->wechat->post($url,json_encode($data,JSON_UNESCAPED_UNICODE));
+        $re = json_decode($re,1);
+        dd($re);
     }
 
 
