@@ -270,7 +270,7 @@ Route::post('/wx/index/index_1/shanghu_do','wx\index\index_1@shanghu_do');
 Route::post('/wx/index/index_1/caidan_1_do','wx\index\index_1@caidan_1_do');
 Route::get('/wx/index/index_1/caidan_2','wx\index\index_1@caidan_2');
 Route::get('/wx/index/index_1/caidan_3','wx\index\index_1@caidan_3');
-Route::get('/wx/index/index_1/caidan_4','wx\index\index_1@caidan_4');
+Route::get('/wx/index/index_1/caidan_1','wx\index\index_1@caidan_4');
 
 Route::get('/wx/index/index_1/caidan','wx\index\index_1@caidan');
 ///////////////////////////////////////////////////////

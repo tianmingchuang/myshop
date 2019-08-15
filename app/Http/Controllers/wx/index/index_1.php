@@ -592,7 +592,7 @@ class index_1 extends Controller
         $xml = simplexml_load_string($data,'SimpleXMLElement',LIBXML_NOCDATA);
 //        dd($xml);
         $xml = (array)$xml;     //转化成数组
-        dd($xml);
+//        dd($xml);
         $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
         file_put_contents(storage_path('logs/wx_event.log'),$log_str,FILE_APPEND);
         if ($xml['MsgType'] == 'event'){
@@ -622,9 +622,22 @@ class index_1 extends Controller
                         echo $xml_str;
 
                     }
+                }else if($xml['Event']=='CLICK'){
+                    if($xml['EventKey']!==''){
+                        $message = '欢迎前来充值';
+                        $xml_str = '<xml>
+                                          <ToUserName><![CDATA['.$xml['FromUserName'].']]></ToUserName>
+                                          <FromUserName><![CDATA['.$xml['ToUserName'].']]></FromUserName>
+                                          <CreateTime>'.time().'</CreateTime>
+                                          <MsgType><![CDATA[text]]></MsgType>
+                                          <Content><![CDATA['.$message.']]></Content>
+                                    </xml>';
+                        echo $xml_str;
+                    }
+//                    dd(123);
                 }
         }else if ($xml['MsgType'] == 'text'){
-//            \Log::Info(json_encode($xml));
+//            \Log::Infencode($xml));
             $message = '你好!';
             $xml_str = '<xml>
                     <ToUserName><![CDATA['.$xml['FromUserName'].']]>
