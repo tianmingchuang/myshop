@@ -592,7 +592,7 @@ class index_1 extends Controller
         $xml = simplexml_load_string($data,'SimpleXMLElement',LIBXML_NOCDATA);
 //        dd($xml);
         $xml = (array)$xml;     //转化成数组
-//        dd($xml);
+        dd($xml);
         $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
         file_put_contents(storage_path('logs/wx_event.log'),$log_str,FILE_APPEND);
         if ($xml['MsgType'] == 'event'){
@@ -723,6 +723,101 @@ class index_1 extends Controller
     }
     
     //微信菜单
+    public function caidan_1()
+    {
+        return view('wx/index/index_1/caidan_1');
+    }
+
+    public function caidan_1_do(Request $request)
+    {
+        $data = $request->all();
+//        dd($data);
+//        $date = DB::commection('access')->table('caidan')->
+        if (empty($data['er_name'])){
+//            echo 1;
+            $date = DB::connection('access')->table('caidan')->insert(['caidan'=>$data['caidan'],'yi_name'=>$data['yi_name'],'biaoshi'=>$data['biaoshi'],'leixing'=>$data['leixing']]);
+            if($date){
+                return redirect('wx/index/index_1/caidan_2');
+            }
+        }else{
+//            echo 2;
+            $date = DB::connection('access')->table('caidan')->insert(['caidan'=>$data['caidan'],'yi_name'=>$data['yi_name'],'biaoshi'=>$data['biaoshi'],'leixing'=>$data['leixing'],'er_name'=>$data['er_name']]);
+//            dd($date);
+            if($date){
+                return redirect('wx/index/index_1/caidan_2');
+            }
+        }
+
+    }
+    //微信菜单展示
+    public function caidan_2()
+    {
+        $data = DB::connection('access')->table('caidan')->get();
+//        dd($data);
+        return view('wx/index/index_1/caidan_2',['data'=>$data]);
+    }
+
+    public function caidan_3()
+    {
+        $data1 = DB::connection('access')->table('caidan')->groupBy('yi_name')->select(['yi_name'])->orderBy('yi_name')->get()->toArray();
+//        dd($data);
+        foreach ($data1 as $vo){
+//            dump($vo);
+            $data2 = DB::connection('access')->table('caidan')->where('yi_name','=',$vo->yi_name)->get()->toArray();
+            $sub_button = [];
+            foreach($data2 as $v){
+//                 dump($v);
+                if($v->caidan==1){
+                    if($v->leixing=='click'){
+                        $data['button'][] = [
+                            "type" => $v->leixing,
+                            "name" => $v->yi_name,
+                            "key" =>  $v->biaoshi
+                        ];
+
+                    }else if($v->leixing=='view'||$v->leixing=='miniprogram'){
+                        $data['button'][] = [
+                            "type" => $v->leixing,
+                            "name" => $v->yi_name,
+                            "url" =>  $v->biaoshi
+                        ];
+                    }
+                }else if ($v->caidan==2){
+                    if ($v->leixing=='click'){
+                        $sub_button[] = [
+                            "type" => $v->leixing,
+                            "name" => $v->er_name,
+                            "key" =>  $v->biaoshi
+                        ];
+                    }else{
+                        $sub_button[] = [
+                            "type" => $v->leixing,
+                            "name" => $v->er_name,
+                            "url" =>  $v->biaoshi
+                        ];
+                    }
+                }
+            }
+
+        }
+        if (!empty($sub_button)){
+            $data['button'][]=[
+                'name'=>$vo->yi_name,
+                'sub_button'=>$sub_button
+            ];
+        }
+//        dd($data);
+//        dd($data1);
+//        echo $sub_button;
+        $url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->wechat->index_1();
+        $res = $this->wechat->post($url,json_encode($data,JSON_UNESCAPED_UNICODE));
+        $res = json_decode($res,1);
+        dd($res);
+    }
+
+
+
+
     public function caidan()
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->wechat->index_1();
@@ -757,12 +852,82 @@ class index_1 extends Controller
                 ]
             ]
         ];
+        dd($data);
         $re = $this->wechat->post($url,json_encode($data,JSON_UNESCAPED_UNICODE));
         $re = json_decode($re,1);
         dd($re);
     }
 
+    public function caidan_4()
+    {
+        $url = 'https://api.weixin.qq.com/cgi-bin/menu/get?access_token='.$this->wechat->index_1();
+        $res = file_get_contents($url);
+//        dd($res);
+        $res = json_decode($res,1);
+        $data = json_decode(json_encode($res['menu']['button']),1);
+//        dd($data);
+        $data1 = [];
+        foreach($data as $v){
+//            dump($v);
 
+            if(!empty($v['sub_button'])){
+//                echo 1;
+//                dump($v['name']);
+                $data1[] = [
+                    'yi_name' => $v['name'],
+                    'er_name' => '',
+                    'biaoshi' => '',
+                    'leixing' => '',
+                    'dengji'  => 2,
+                ];
+                foreach($v['sub_button'] as $vo){
+//                    dump($vo['name']);
+                    if($vo['type']=='click'){
+                        $data1[] = [
+                            'yi_name' => '',
+                            'er_name' => $vo['name'],
+                            'biaoshi' => $vo['type'],
+                            'leixing' => $vo['key'],
+                            'dengji'  => 2,
+                        ];
+                    }else{
+                        $data1[] = [
+                            'yi_name' => '',
+                            'er_name' => $vo['name'],
+                            'biaoshi' => $vo['type'],
+                            'leixing' => $vo['url'],
+                            'dengji'  => 2,
+                        ];
+                    }
+
+
+                }
+            }
+            if(empty($v['sub_button'])){
+//                echo 2;
+                if($v['type']=='click'){
+                    $data1[] = [
+                        'yi_name' => $v['name'],
+                        'er_name' => '',
+                        'biaoshi' => $v['type'],
+                        'leixing' => $v['key'],
+                        'dengji'  => 1,
+                    ];
+                }else{
+                    $data1[] = [
+                        'yi_name' => $v['name'],
+                        'er_name' => '',
+                        'biaoshi' => $v['type'],
+                        'leixing' => $v['url'],
+                        'dengji'  => 2,
+                    ];
+                }
+
+            }
+        }
+//        dd($data1);
+        return view('wx/index/index_1/caidan_1',['data'=>$data1]);
+    }
 
 
 

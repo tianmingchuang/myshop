@@ -74,7 +74,8 @@
                         <dd><a href="{{url('wx/index/index_1/get_yonghu_do')}}">用户标签展示</a></dd>
                         <dd><a href="{{url('wx/index/index_1/erwmas')}}">二维码</a></dd>
                         <dd><a href="{{url('wx/index/index_1/shanghu')}}">二维码商户添加</a></dd>
-                        <dd><a href="{{url('wx/index/index_1/caidan')}}">微信菜单</a></dd>
+                        <dd><a href="{{url('wx/index/index_1/caidan_1')}}">微信菜单添加</a></dd>
+                        <dd><a href="{{url('wx/index/index_1/caidan_2')}}">微信菜单展示</a></dd>
                     </dl>
                 </li>
 

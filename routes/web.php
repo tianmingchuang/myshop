@@ -266,6 +266,12 @@ Route::get('/wx/index/index_1/shanghu','wx\index\index_1@shanghu');
 Route::post('/wx/index/index_1/shanghu_do','wx\index\index_1@shanghu_do');
 
 //微信菜单
+//Route::get('/wx/index/index_1/caidan_1','wx\index\index_1@caidan_1');
+Route::post('/wx/index/index_1/caidan_1_do','wx\index\index_1@caidan_1_do');
+Route::get('/wx/index/index_1/caidan_2','wx\index\index_1@caidan_2');
+Route::get('/wx/index/index_1/caidan_3','wx\index\index_1@caidan_3');
+Route::get('/wx/index/index_1/caidan_4','wx\index\index_1@caidan_4');
+
 Route::get('/wx/index/index_1/caidan','wx\index\index_1@caidan');
 ///////////////////////////////////////////////////////
 /// //清零接口调用频次
