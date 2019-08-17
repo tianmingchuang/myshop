@@ -273,6 +273,26 @@ Route::get('/wx/index/index_1/caidan_3','wx\index\index_1@caidan_3');
 Route::get('/wx/index/index_1/caidan_1','wx\index\index_1@caidan_4');
 
 Route::get('/wx/index/index_1/caidan','wx\index\index_1@caidan');
+Route::get('/wx/index/index_1/caidan_delete/{id}','wx\index\index_1@caidan_delete');
+
+
+
+//微信练题
+Route::get('/wx/index/index_2/index','wx\index\index_2@index');
+Route::post('/wx/index/index_2/index_do','wx\index\index_2@index_do');
+Route::get('/wx/index/index_2/index_1','wx\index\index_2@index_1');
+Route::get('/wx/index/index_2/index_2','wx\index\index_2@index_2');
+Route::get('/wx/index/index_2/index_3','wx\index\index_2@index_3');
+
+Route::group(['middleware' => ['biaobai']], function() {
+    Route::get('/wx/index/index_2/index_4', 'wx\index\index_2@index_4');
+    Route::get('/wx/index/index_2/index_4_do', 'wx\index\index_2@index_4_do');
+    Route::post('/wx/index/index_2/index_41', 'wx\index\index_2@index_41');
+    Route::get('/wx/index/index_2/index_5', 'wx\index\index_2@index_5');
+    Route::get('/wx/index/index_2/login', 'wx\index\index_2@login');
+    Route::get('/wx/index/index_2/code', 'wx\index\index_2@code');
+});
+
 ///////////////////////////////////////////////////////
 /// //清零接口调用频次
 Route::get('/wx/index/index_1/aa','wx\index\index_1@aa');

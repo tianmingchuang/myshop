@@ -79,6 +79,14 @@
                     </dl>
                 </li>
 
+                <li class="layui-nav-item">
+                    <a href="javascript:;">微信练题</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="{{url('wx/index/index_2/index')}}">表白题试</a></dd>
+                        <dd><a href="{{url('wx/index/index_2/index_1')}}">表白题试展示</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
 
             </ul>
         </div>

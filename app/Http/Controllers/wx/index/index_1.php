@@ -100,7 +100,7 @@ class index_1 extends Controller
         if($date){
             $redis = $this->wechat->index_1();
             $openid = $openid;
-            dd($openid);
+//            dd($openid);
             $data12  = file_get_contents("https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$redis."&openid=".$openid."&lang=zh_CN");
             $data13 = json_decode($data12,1);
             $name = $data13['nickname'];
@@ -112,7 +112,7 @@ class index_1 extends Controller
 //                "url" => "http://www.baidu.com",
                 'data' => [
                     "first" => [
-                        "value" => "欢迎{$name}登录",
+                        "value" => "欢迎{$name}登录",//gqmn
                         "color" => ""
                     ]
                 ]
@@ -122,7 +122,7 @@ class index_1 extends Controller
             return redirect('index/index/index');
         }else{
             $data = DB::connection('access')->table('openid')->insert(['openid'=>$openid]);
-            if($data){
+            if($data){//xwgnqb
                 $request->session()->put('data', $data);
                 return redirect('index/index/index');
             }else{
@@ -163,7 +163,7 @@ class index_1 extends Controller
     //模板信息推送
     public function push_template()
     {
-        $openid = 'otyo9wpROjxQB1BvKyAugQZQo-7I';
+        $openid = 'otyo9wmGl_uhySBPgi1C-Kx2GOH4';
         $url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='.$this->wechat->index_1();
         $datas = [
             'touser' => $openid,
@@ -391,6 +391,7 @@ class index_1 extends Controller
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/tags/get?access_token='.$this->wechat->index_1();
         $data = file_get_contents($url);
+//        dd($data);
         $data = json_decode($data,1);
         $data = $data['tags'];
 //        dd($data);
@@ -770,10 +771,19 @@ class index_1 extends Controller
         return view('wx/index/index_1/caidan_2',['data'=>$data]);
     }
 
+    public function caidan_delete($id)
+    {
+//        dd($id);
+        $data = DB::connection('access')->table('caidan')->where('id','=',$id)->delete();
+        if($data){
+            return redirect('wx/index/index_1/caidan_2');
+        }
+    }
+    
     public function caidan_3()
     {
         $data1 = DB::connection('access')->table('caidan')->groupBy('yi_name')->select(['yi_name'])->orderBy('yi_name')->get()->toArray();
-//        dd($data);
+//        dd($data1);
         foreach ($data1 as $vo){
 //            dump($vo);
             $data2 = DB::connection('access')->table('caidan')->where('yi_name','=',$vo->yi_name)->get()->toArray();
@@ -796,6 +806,8 @@ class index_1 extends Controller
                         ];
                     }
                 }else if ($v->caidan==2){
+//                    dump($v);
+//                    dd();
                     if ($v->leixing=='click'){
                         $sub_button[] = [
                             "type" => $v->leixing,
@@ -811,16 +823,16 @@ class index_1 extends Controller
                     }
                 }
             }
+            if (!empty($sub_button)){
+                $data['button'][]=[
+                    'name'=>$vo->yi_name,
+                    'sub_button'=>$sub_button
+                ];
+            }
+        }
 
-        }
-        if (!empty($sub_button)){
-            $data['button'][]=[
-                'name'=>$vo->yi_name,
-                'sub_button'=>$sub_button
-            ];
-        }
 //        dd($data);
-//        dd($data1);
+//        dd($datas1);
 //        echo $sub_button;
         $url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->wechat->index_1();
         $res = $this->wechat->post($url,json_encode($data,JSON_UNESCAPED_UNICODE));
@@ -885,7 +897,7 @@ class index_1 extends Controller
 
             if(!empty($v['sub_button'])){
 //                echo 1;
-//                dump($v['name']);
+//                dump($v);
                 $data1[] = [
                     'yi_name' => $v['name'],
                     'er_name' => '',
@@ -894,7 +906,7 @@ class index_1 extends Controller
                     'dengji'  => 2,
                 ];
                 foreach($v['sub_button'] as $vo){
-//                    dump($vo['name']);
+//                    dump($vo);
                     if($vo['type']=='click'){
                         $data1[] = [
                             'yi_name' => '',
@@ -932,7 +944,7 @@ class index_1 extends Controller
                         'er_name' => '',
                         'biaoshi' => $v['type'],
                         'leixing' => $v['url'],
-                        'dengji'  => 2,
+                        'dengji'  => 1,
                     ];
                 }
 

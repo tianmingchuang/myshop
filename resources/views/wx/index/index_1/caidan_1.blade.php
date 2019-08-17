@@ -35,28 +35,30 @@
         <br>
         <br>
         <br>
-        <table border>
-            <tr align="center">
-                <td>菜单名称</td>
-                <td>二级菜单</td>
-                <td>菜单等级</td>
-                <td>菜单类型</td>
-                <td>菜单标识</td>
-                <td>操作</td>
-            </tr>
-            @foreach($data as $v)
-                <tr align="center">
-                    <td>{{$v['yi_name']}}</td>
-                    <td>{{$v['er_name']}}</td>
-                    <td>{{$v['dengji']}}</td>
-                    <td>{{$v['leixing']}}</td>
-                    <td>{{$v['biaoshi']}}</td>
-                    <td>
-                        <a href="">删除</a>
-                    </td>
-                </tr>
-            @endforeach
-        </table>
-    </center>
 
+    </center>
+    <center>
+            <table border>
+                <tr align="center">
+                    <td>菜单名称</td>
+                    <td>二级菜单</td>
+                    <td>菜单等级</td>
+                    <td>菜单类型</td>
+                    <td>菜单标识</td>
+                    <td>操作</td>
+                </tr>
+                @foreach($data as $v)
+                    <tr align="center">
+                        <td>{{$v['yi_name']}}</td>
+                        <td>{{$v['er_name']}}</td>
+                        <td>{{$v['dengji']}}</td>
+                        <td>{{$v['leixing']}}</td>
+                        <td>{{$v['biaoshi']}}</td>
+                        <td>
+                            <a href="">删除</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+    </center>
 @endsection

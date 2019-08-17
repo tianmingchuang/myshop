@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'login_5' => \App\Http\Middleware\zho\Login_5::class,
         'login' => \App\Http\Middleware\Login::class,
         'kao' => \App\Http\Middleware\kao\Kao::class,
+        'biaobai' => \App\Http\Middleware\wx\index_2\Biaobai::class,
 
 
     ];
