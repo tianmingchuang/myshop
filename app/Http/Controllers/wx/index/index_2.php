@@ -136,7 +136,7 @@ class index_2 extends Controller
 //        $res1 = $res['nickname'];
 //        $request->session()->forget('name');
 //        $request->session()->put('name', $res);
-        return redirect('index/index_2/index_3');
+        return redirect('wx/index/index_2/index_3');
 
 //        }
     }
