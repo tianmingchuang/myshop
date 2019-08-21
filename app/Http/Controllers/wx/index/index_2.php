@@ -106,12 +106,12 @@ class index_2 extends Controller
         $res = $this->wechat->post($url,json_encode($data,JSON_UNESCAPED_UNICODE));
 //        dd($res);
         $res = json_decode($res,1);
-//        dd($res);
+        dd($res);
     }
 
     public function login()
     {
-        $redirect_uri = 'http://www.my_shop.com/wx/index/index_2/code';
+        $redirect_uri = env('APP_URL').'/wx/index/index_2/code';
         $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('WECHAT_APPID').'&redirect_uri='.urlencode($redirect_uri).'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
         header('location:'.$url);
     }
@@ -131,6 +131,8 @@ class index_2 extends Controller
         $res = file_get_contents($url1);
 //        dd($res);
         $res = json_decode($res,1);
+        $request->session()->forget('add');
+        $request->session()->put('add', $res);
 //        dd($res);
 //        return $res['nickname'];
 //        $res1 = $res['nickname'];
@@ -141,8 +143,11 @@ class index_2 extends Controller
 //        }
     }
 
-    public function index_3()
+    public function index_3(Request $request)
     {
+//        dd($request->session()->has('add'));
+        $value = $request->session()->get('add');
+//        dd($value);
         return view('wx/index/index_2/index_3');
     }
 //我要表白
@@ -171,14 +176,22 @@ class index_2 extends Controller
 //        $name = $this->code();
 //        dd($name);
         $data = $request->all();
-//        dd($data['id']);
-        return view('wx/index/index_2/index_4_do',['openid'=>$data['id']]);
+//        dd($data);
+        $data = DB::connection('access')->table('wechat_openid')->where('id','=',$data['id'])->first();
+//        dd($data);
+        $value = $request->session()->get('add');
+//        dd($value);
+        return view('wx/index/index_2/index_4_do',['openid'=>$data->openid,'name'=>$value['nickname']]);
     }
 
     public function index_41(Request $request)
     {
         $data = $request->all();
 //        dd($data);
+        $data21 = DB::connection('access')->table('wechat_openid')->where('openid','=',$data['openid'])->first();
+        $value = $request->session()->get('add');
+//        dd($value);
+        $date = DB::connection('access')->table('kao')->insert(['faname'=>$value['openid'],'shoname'=>$data['openid'],'nr'=>$data['desc'],'name'=>$data21->ming]);
         $url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='.$this->wechat->index_1();
         $data1 = [
             'touser' => $data['openid'],
@@ -189,18 +202,121 @@ class index_2 extends Controller
                     'color' => ''
                    ],
                 'keyword1' => [
-                    'value' => ':'.$data['desc'],
+                    'value' => ': '.$data['desc'],
                     'color' => ''
                    ],
             ]
         ];
+//        dd($data1);
         $res = $this->wechat->post($url,json_encode($data1));
         $res = json_decode($res,1);
         dd($res);
     }
 //收到表白
-    public function index_5()
+    public function index_5(Request $request)
     {
-        dd(2);
+//        dd(2);
+        $value = $request->session()->get('add');
+//        dd($value);
+
+        $data = DB::connection('access')->table('kao')->where('shoname','=',$value['openid'])->get();
+//        dd($data);
+        return view('wx/index/index_2.index_5',['data'=>$data]);
     }
+    
+    //周考
+    public function zhokao()
+    {
+//        dd(1);
+        $redirect_uri = env('APP_URL').'/wx/index/index_2/zhokao_1';
+        $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('WECHAT_APPID').'&redirect_uri='.urlencode($redirect_uri).'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+//        dd($url);
+        header('location:'.$url);
+    }
+
+    public function zhokao_1(Request $request)
+    {
+        $data = $request->all();
+//        dd($data);
+        $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('WECHAT_APPID').'&secret='.env('WECHAT_APPSECRET').'&code='.$data['code'].'&grant_type=authorization_code';
+        $res = file_get_contents($url);
+        $res = json_decode($res,1)['openid'];
+//        dd($res);
+//        $url1 = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->wechat->index_1().'&openid='.$res.'&lang=zh_CN';
+//        $res1 = file_get_contents($url1);
+//        $res1 = json_decode($res1);
+        $res1 = DB::connection('access')->table('wechat_openid')->where('openid','=',$res)->first();
+//        dd($res1->ming);
+        $url =  'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='.$this->wechat->index_1();
+        $data1 = [
+            'touser' => $res,
+            'template_id' => 's_YzwGdD1NrLBTStf4D_qD88Sqa5OG8oZ3M8cK2QVSs',
+            'data' => [
+                'first' => [
+                    'value' => '欢迎用户',
+                    'color' => ''
+                ],
+                'keyword1' => [
+                    'value' => ': '.$res1->ming.'登录成功',
+                    'color' => ''
+                ],
+            ]
+        ];
+        $res = $this->wechat->post($url,json_encode($data1));
+//        $res = json_decode($res,1);
+        $data = DB::connection('access')->table('user')->get();
+        return view('wx/index/index_2/zhokao_1',['data'=>$data,'date'=>$res1->ming,'id'=>$res1->id]);
+    }
+
+    public function zhokao_2(Request $request,$uid)
+    {
+        $data = $request->all();
+//        dd($data);
+//        dd($id);
+//        $data1 = DB::connection('access')->table('openid')->where('id','=',$data['id'])->first();
+//        dd($data);
+        return view('wx/index/index_2/zhokao_2',['uid'=>$uid,'id'=>$data['id']]);
+    }
+
+    public function zhokao_2_do(Request $request)
+    {
+        $data = $request->all();
+//        dd($data['id']);
+        $date = DB::connection('access')->table('openid')->where('uid','=',$data['uid'])->first();
+        $date2 = DB::connection('access')->table('wechat_openid')->where('id','=',$data['id'])->first();
+//        dd($date);
+        $date1 = DB::connection('access')->table('wechat_openid')->where('id','=',$data['uid'])->first();
+//        dd($date1);
+        $data1 = DB::connection('access')->table('zhokao')->insert(['liuyanxinxi'=>$data['desc'],'name'=>$date1->ming,'uid'=>$date1->id,'ly'=>$data['id']]);
+//        dd($date->openid);
+        $url =  'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='.$this->wechat->index_1();
+        $data1 = [
+            'touser' => $date->openid,
+            'template_id' => 's_YzwGdD1NrLBTStf4D_qD88Sqa5OG8oZ3M8cK2QVSs',
+            'data' => [
+                'first' => [
+                    'value' => '来自',$date2->ming,
+                    'color' => ''
+                ],
+                'keyword1' => [
+                    'value' => ': '.$data['desc'],
+                    'color' => ''
+                ],
+            ]
+        ];
+        $res = $this->wechat->post($url,json_encode($data1));
+        $res = json_decode($res,1);
+        dd($res);
+
+    }
+
+    public function zhokao_3(Request $request)
+    {
+//        dd(1);
+        $data = $request->all();
+
+        $data = DB::connection('access')->table('zhokao')->where('ly','=',$data['id'])->get();
+        return view('wx/index/index_2/zhokao_3',['data'=>$data]);
+    }
+
 }

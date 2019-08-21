@@ -9,20 +9,25 @@
 </head>
 <body>
 <center>
-    <table border>
+    <a href="{{url('wx/index/index_2/zhokao_3')}}?id={{$id}}">我的留言</a>
+    <h3>欢迎{{$date}}登录</h3>
+    <table>
         <tr>
-            <td>姓名</td>
+            <td>编号</td>
+            <td>用户名称</td>
             <td>操作</td>
         </tr>
         @foreach($data as $v)
         <tr>
-            <td>{{$v->ming}}</td>
+            <td>{{$v->id}}</td>
+            <td>{{$v->name}}</td>
             <td>
-                <a href="{{url('wx/index/index_2/index_4_do')}}?id={{$v->id}}">表白</a>
+                <a href="{{url('wx/index/index_2/zhokao_2',['uid'=>$v->id])}}?id={{$id}}">留言</a>
             </td>
         </tr>
         @endforeach
     </table>
+
 </center>
 </body>
 </html>

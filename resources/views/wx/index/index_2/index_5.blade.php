@@ -9,17 +9,17 @@
 </head>
 <body>
 <center>
-    <table border>
+    <table>
         <tr>
-            <td>姓名</td>
-            <td>操作</td>
+            <td>编号</td>
+            <td>发送人</td>
+            <td>内容</td>
         </tr>
         @foreach($data as $v)
         <tr>
-            <td>{{$v->ming}}</td>
-            <td>
-                <a href="{{url('wx/index/index_2/index_4_do')}}?id={{$v->id}}">表白</a>
-            </td>
+            <td>{{$v->id}}</td>
+            <td>{{$v->name}}</td>
+            <td>{{$v->nr}}</td>
         </tr>
         @endforeach
     </table>

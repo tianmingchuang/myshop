@@ -293,6 +293,16 @@ Route::group(['middleware' => ['biaobai']], function() {
     Route::get('/wx/index/index_2/code', 'wx\index\index_2@code');
 });
 
+//周考
+Route::get('/wx/index/index_2/zhokao', 'wx\index\index_2@zhokao');
+Route::get('/wx/index/index_2/zhokao_2/{uid}', 'wx\index\index_2@zhokao_2');
+Route::group(['middleware' => ['zhokao']], function() {
+    Route::get('/wx/index/index_2/zhokao_1', 'wx\index\index_2@zhokao_1');
+    Route::get('/wx/index/index_2/zhokao_3', 'wx\index\index_2@zhokao_3');
+    Route::post('/wx/index/index_2/zhokao_2_do', 'wx\index\index_2@zhokao_2_do');
+});
+
+
 ///////////////////////////////////////////////////////
 /// //清零接口调用频次
 Route::get('/wx/index/index_1/aa','wx\index\index_1@aa');

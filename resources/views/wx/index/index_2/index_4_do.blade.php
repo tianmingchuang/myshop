@@ -15,8 +15,8 @@
             <tr>
                 <th>是否匿名发送</th>
                 <th>
-                    <input type="radio" name="radio" value="" id="">是
-                    <input type="radio" name="radio" value="匿名用户" id="">否
+                    <input type="radio" name="radio" value="匿名用户" id="">是
+                    <input type="radio" name="radio" value="{{$name}}" id="">否
                 </th>
             </tr>
             <tr>
