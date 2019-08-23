@@ -223,7 +223,12 @@ class index_2 extends Controller
 //        dd($data);
         return view('wx/index/index_2.index_5',['data'=>$data]);
     }
-    
+    //我的表白
+    public function index_biao()
+    {
+//        dd(1);
+        
+    }
     //周考
     public function zhokao()
     {
@@ -317,6 +322,15 @@ class index_2 extends Controller
 
         $data = DB::connection('access')->table('zhokao')->where('ly','=',$data['id'])->get();
         return view('wx/index/index_2/zhokao_3',['data'=>$data]);
+    }
+
+    //油价
+    public function youjia()
+    {
+//        dd(1);
+//        $nextOpenId = 'otyo9wlzqGfvRSufGQvWJE-4Fumo';
+//        $data = $this->wechat->app->user->list($nextOpenId = null);  // $nextOpenId 可选
+//        dd($data);
     }
 
 }

@@ -639,7 +639,7 @@ class index_1 extends Controller
                 }
         }else if ($xml['MsgType'] == 'text'){
 //            \Log::Infencode($xml));
-            $message = '你好!';
+            $message = '你好11!';
             $xml_str = '<xml>
                     <ToUserName><![CDATA['.$xml['FromUserName'].']]>
                     </ToUserName><FromUserName><![CDATA['.$xml['ToUserName'].']]>
@@ -953,6 +953,8 @@ class index_1 extends Controller
 //        dd($data1);
         return view('wx/index/index_1/caidan_1',['data'=>$data1]);
     }
+
+    ///////油价查询
 
 
 

@@ -283,6 +283,7 @@ Route::post('/wx/index/index_2/index_do','wx\index\index_2@index_do');
 Route::get('/wx/index/index_2/index_1','wx\index\index_2@index_1');
 Route::get('/wx/index/index_2/index_2','wx\index\index_2@index_2');
 Route::get('/wx/index/index_2/index_3','wx\index\index_2@index_3');
+Route::get('/wx/index/index_2/index_biao','wx\index\index_2@index_biao');
 
 Route::group(['middleware' => ['biaobai']], function() {
     Route::get('/wx/index/index_2/index_4', 'wx\index\index_2@index_4');
@@ -302,7 +303,8 @@ Route::group(['middleware' => ['zhokao']], function() {
     Route::post('/wx/index/index_2/zhokao_2_do', 'wx\index\index_2@zhokao_2_do');
 });
 
-
+//////////油价查询
+Route::get('/wx/index/index_1/youjia', 'wx\index\index_1@youjia');
 ///////////////////////////////////////////////////////
 /// //清零接口调用频次
 Route::get('/wx/index/index_1/aa','wx\index\index_1@aa');
