@@ -611,7 +611,7 @@ class index_1 extends Controller
                             $data4 = DB::connection('access')->table('user')->where('id','=',$agent_code)->update(['agent'=>$data3]);
 //                            dd($data4);
                         }
-                        $message = '你好,欢迎关注本服务号!';
+                        $message = '欢迎使用本公司提供的油价查询功能!';
                         $xml_str = '<xml>
                     <ToUserName><![CDATA['.$xml['FromUserName'].']]>
                     </ToUserName><FromUserName><![CDATA['.$xml['ToUserName'].']]>
@@ -639,6 +639,7 @@ class index_1 extends Controller
                 }
         }else if ($xml['MsgType'] == 'text'){
 //            \Log::Infencode($xml));
+            dd($xml['Content']);
             $message = '你好11!';
             $xml_str = '<xml>
                     <ToUserName><![CDATA['.$xml['FromUserName'].']]>

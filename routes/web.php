@@ -304,7 +304,8 @@ Route::group(['middleware' => ['zhokao']], function() {
 });
 
 //////////油价查询
-Route::get('/wx/index/index_1/youjia', 'wx\index\index_1@youjia');
+Route::get('/wx/index/index_2/youjia', 'wx\index\index_2@youjia');
+Route::get('youjia', 'PriceController@price_api');
 ///////////////////////////////////////////////////////
 /// //清零接口调用频次
 Route::get('/wx/index/index_1/aa','wx\index\index_1@aa');

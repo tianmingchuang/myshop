@@ -329,8 +329,8 @@ class index_2 extends Controller
     {
 //        dd(1);
 //        $nextOpenId = 'otyo9wlzqGfvRSufGQvWJE-4Fumo';
-//        $data = $this->wechat->app->user->list($nextOpenId = null);  // $nextOpenId 可选
-//        dd($data);
+        $data = $this->wechat->app->user->list();  // $nextOpenId 可选
+        dd($data);
     }
 
 }
