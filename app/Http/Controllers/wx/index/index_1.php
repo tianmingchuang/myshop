@@ -663,16 +663,10 @@ class index_1 extends Controller
             }else {
                 if(($redis->get("$city"))>=10){
 //                    dd(11);
-                    $re = '/^.*?油价$/';
-                    $info = file_get_contents('http://www.tianmingchuang.com/youjia');
-                    $info = json_decode($info,1);
-                    $data = preg_match($re,$city);
-//            dd($data);
-                    $city = substr($city,0,-6);
 //            dd($city);
                     $date = '';
                     foreach($info['result'] as $v){
-                        if($v['city'] == $city){
+                        if($v['city'] == $city1){
 //                    dump($v);
                             unset($v['city'],$v['b90'],$v['0h']);
 //                    dump($v);
@@ -689,16 +683,10 @@ class index_1 extends Controller
                     $redis->set("$city1","$date");
                 }else{
 //                    dd(12);
-                    $re = '/^.*?油价$/';
-                    $info = file_get_contents('http://www.tianmingchuang.com/youjia');
-                    $info = json_decode($info,1);
-                    $data = preg_match($re,$city);
-//            dd($data);
-                    $city = substr($city,0,-6);
-//            dd($city);
+
                     $date = '';
                     foreach($info['result'] as $v){
-                        if($v['city'] == $city){
+                        if($v['city'] == $city1){
 //                    dump($v);
                             unset($v['city'],$v['b90'],$v['0h']);
 //                    dump($v);
