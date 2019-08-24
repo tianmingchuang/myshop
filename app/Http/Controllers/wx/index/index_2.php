@@ -331,9 +331,10 @@ class index_2 extends Controller
 //        $nextOpenId = 'otyo9wlzqGfvRSufGQvWJE-4Fumo';
 //        $data = $this->wechat->app->user->list();  // $nextOpenId 可选
 //        dd($data);
-        $data = file_get_contents(env('APP_URL').'/youjia');
-        $data = json_decode($data,1);
+        $data = file_get_contents('http://apis.juhe.cn/cnoil/oil_city?key=cd7e681bc143aa60df4720461028a14f');
         dd($data);
+//        $data = json_decode($data,1);
+//        dd($data);
     }
 
 }
