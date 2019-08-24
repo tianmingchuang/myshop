@@ -639,8 +639,30 @@ class index_1 extends Controller
                 }
         }else if ($xml['MsgType'] == 'text'){
 //            \Log::Infencode($xml));
-            dd($xml['Content']);
-            $message = '你好11!';
+            $city = $xml['Content'];
+            $re = '/^.*?油价$/';
+            $info = file_get_contents('http://www.tianmingchuang.com/youjia');
+            $info = json_decode($info,1);
+            $data = preg_match($re,$city);
+//            dd($data);
+            $city = substr($city,0,-6);
+//            dd($city);
+            $date = '';
+            foreach($info['result'] as $v){
+                if($v['city'] == $city){
+//                    dump($v);
+                    unset($v['city'],$v['b90']);
+//                    dump($v);
+                    foreach($v as $k=>$vi){
+//                        dump($vi);
+//                        dump($k);
+                        $date .= $k.': 每升'.$vi."\n";
+                    }
+//                    dd();
+                }
+            }
+//            dd($date);
+            $message = $date;
             $xml_str = '<xml>
                     <ToUserName><![CDATA['.$xml['FromUserName'].']]>
                     </ToUserName><FromUserName><![CDATA['.$xml['ToUserName'].']]>

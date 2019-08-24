@@ -337,4 +337,12 @@ class index_2 extends Controller
 //        dd($data);
     }
 
+    public function ceshi()
+    {
+//        $data = file_get_contents(env('APP_URL').'/youjia');
+        $data = file_get_contents('http://www.tianmingchuang.com/youjia');
+//        dd($data);
+        dd(json_decode($data,1));
+    }
+
 }
