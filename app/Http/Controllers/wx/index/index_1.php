@@ -640,28 +640,80 @@ class index_1 extends Controller
         }else if ($xml['MsgType'] == 'text'){
 //            \Log::Infencode($xml));
             $city = $xml['Content'];
+            $redis = new \Redis();
+            $redis->connect('127.0.0.1','6379');
+            $redis->incr("$city");
+            dump($redis->get("$city"));
+//            $dat = '111';
+//            dump($dat);
+//            $redis->set("明","天");
+//            $data = $redis->get("明");
+//            dd($data);
+
             $re = '/^.*?油价$/';
             $info = file_get_contents('http://www.tianmingchuang.com/youjia');
             $info = json_decode($info,1);
             $data = preg_match($re,$city);
 //            dd($data);
-            $city = substr($city,0,-6);
+            $city1 = substr($city,0,-6);
+            if(($redis->get("$city"))>11){
+                $data = $redis->get("$city1");
+//                dd($data);
+                $date = json_decode($data,1);
+            }else {
+                if(($redis->get("$city"))>=10){
+//                    dd(11);
+                    $re = '/^.*?油价$/';
+                    $info = file_get_contents('http://www.tianmingchuang.com/youjia');
+                    $info = json_decode($info,1);
+                    $data = preg_match($re,$city);
+//            dd($data);
+                    $city = substr($city,0,-6);
 //            dd($city);
-            $date = '';
-            foreach($info['result'] as $v){
-                if($v['city'] == $city){
+                    $date = '';
+                    foreach($info['result'] as $v){
+                        if($v['city'] == $city){
 //                    dump($v);
-                    unset($v['city'],$v['b90']);
+                            unset($v['city'],$v['b90'],$v['0h']);
 //                    dump($v);
-                    foreach($v as $k=>$vi){
+                            foreach($v as $k=>$vi){
 //                        dump($vi);
 //                        dump($k);
-                        $date .= $k.': 每升'.$vi."\n";
-                    }
+                                $date .= $k.': 每升'.$vi."\n";
+                            }
 //                    dd();
+                        }
+                    }
+                    $date = json_encode($date);
+//                    dd($date);
+                    $redis->set("$city1","$date");
+                }else{
+//                    dd(12);
+                    $re = '/^.*?油价$/';
+                    $info = file_get_contents('http://www.tianmingchuang.com/youjia');
+                    $info = json_decode($info,1);
+                    $data = preg_match($re,$city);
+//            dd($data);
+                    $city = substr($city,0,-6);
+//            dd($city);
+                    $date = '';
+                    foreach($info['result'] as $v){
+                        if($v['city'] == $city){
+//                    dump($v);
+                            unset($v['city'],$v['b90'],$v['0h']);
+//                    dump($v);
+                            foreach($v as $k=>$vi){
+//                        dump($vi);
+//                        dump($k);
+                                $date .= $k.': 每升'.$vi."\n";
+                            }
+//                    dd();
+                        }
+                    }
                 }
             }
-//            dd($date);
+
+            dd($date);
             $message = $date;
             $xml_str = '<xml>
                     <ToUserName><![CDATA['.$xml['FromUserName'].']]>
