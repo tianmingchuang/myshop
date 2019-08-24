@@ -713,7 +713,7 @@ class index_1 extends Controller
                 }
             }
 
-            dd($date);
+//            dd($date);
             $message = $date;
             $xml_str = '<xml>
                     <ToUserName><![CDATA['.$xml['FromUserName'].']]>
