@@ -358,7 +358,7 @@ class PriceController extends Controller
   "error_code": 0
 }
         ';
-//        echo $info;
+        echo $info;
 //        dd(json_decode($info,1));
     }
 }

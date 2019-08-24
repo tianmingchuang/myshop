@@ -329,7 +329,10 @@ class index_2 extends Controller
     {
 //        dd(1);
 //        $nextOpenId = 'otyo9wlzqGfvRSufGQvWJE-4Fumo';
-        $data = $this->wechat->app->user->list();  // $nextOpenId 可选
+//        $data = $this->wechat->app->user->list();  // $nextOpenId 可选
+//        dd($data);
+        $data = file_get_contents(env('APP_URL').'/youjia');
+        $data = json_decode($data,1);
         dd($data);
     }
 
