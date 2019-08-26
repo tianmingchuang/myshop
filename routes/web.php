@@ -307,6 +307,9 @@ Route::group(['middleware' => ['zhokao']], function() {
 Route::get('/wx/index/index_2/youjia', 'wx\index\index_2@youjia');
 Route::get('ceshi', 'wx\index\index_2@ceshi');
 Route::get('youjia', 'PriceController@price_api');
+
+////////////任务调度测试
+Route::get('rewudiaodu', 'wx\index\index_1@rewudiaodu');
 ///////////////////////////////////////////////////////
 /// //清零接口调用频次
 Route::get('/wx/index/index_1/aa','wx\index\index_1@aa');

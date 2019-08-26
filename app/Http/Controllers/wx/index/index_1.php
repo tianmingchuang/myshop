@@ -656,12 +656,12 @@ class index_1 extends Controller
             $data = preg_match($re,$city);
 //            dd($data);
             $city1 = substr($city,0,-6);
-            if(($redis->get("$city"))>11){
+            if(($redis->get("$city"))>3){
                 $data = $redis->get("$city1");
 //                dd($data);
                 $date = json_decode($data,1);
             }else {
-                if(($redis->get("$city"))>=10){
+
 //                    dd(11);
 //            dd($city);
                     $date = '';
@@ -673,32 +673,35 @@ class index_1 extends Controller
                             foreach($v as $k=>$vi){
 //                        dump($vi);
 //                        dump($k);
-                                $date .= $k.': 每升'.$vi."\n";
+                                $date .= $k.': 每升'.$vi.'元'."\n";
                             }
 //                    dd();
                         }
                     }
+                    if(($redis->get("$city"))>=2){
                     $date = json_encode($date);
 //                    dd($date);
                     $redis->set("$city1","$date");
-                }else{
-//                    dd(12);
 
-                    $date = '';
-                    foreach($info['result'] as $v){
-                        if($v['city'] == $city1){
-//                    dump($v);
-                            unset($v['city'],$v['b90'],$v['0h']);
-//                    dump($v);
-                            foreach($v as $k=>$vi){
-//                        dump($vi);
-//                        dump($k);
-                                $date .= $k.': 每升'.$vi."\n";
-                            }
-//                    dd();
-                        }
-                    }
                 }
+//                    else{
+////                    dd(12);
+//
+//                    $date = '';
+//                    foreach($info['result'] as $v){
+//                        if($v['city'] == $city1){
+////                    dump($v);
+//                            unset($v['city'],$v['b90'],$v['0h']);
+////                    dump($v);
+//                            foreach($v as $k=>$vi){
+////                        dump($vi);
+////                        dump($k);
+//                                $date .= $k.': 每升'.$vi."\n";
+//                            }
+////                    dd();
+//                        }
+//                    }
+//                }
             }
 
 //            dd($date);
@@ -753,7 +756,7 @@ class index_1 extends Controller
         $re = json_decode($re,1);
 //        dd($re);
         $res = DB::connection('access')->table('user')->where('id','=',$id)->update(['agent_code'=>$re['ticket']]);
-//        dd($res);/
+    //        dd($res);/
         $url1 = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$re['ticket'];
 //        dd($url1);
         $client = new Client();
@@ -1018,7 +1021,20 @@ class index_1 extends Controller
     }
 
     ///////油价查询
-
+    public function rewudiaodu()
+    {
+//        dd(11);
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1','6379');
+//        $schedule->call(function(){
+            //业务逻辑
+            //获取数据
+            $info = file_get_contents('http://www.tianmingchuang.com/youjia');
+            $info = json_decode($info,1);
+            dd($info);
+            //与redis里的数据做对比油价是否有变动
+//        });
+    }
 
 
 

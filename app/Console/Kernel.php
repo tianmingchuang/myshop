@@ -26,6 +26,16 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1','6379');
+        $schedule->call(function(){
+            //业务逻辑
+            //获取数据
+            $info = file_get_contents('http://www.tianmingchuang.com/youjia');
+            $info = json_decode($info,1);
+
+            //与redis里的数据做对比油价是否有变动
+        });
     }
 
     /**
