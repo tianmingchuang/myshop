@@ -1031,7 +1031,7 @@ class index_1 extends Controller
             //获取数据
             $info = file_get_contents('http://www.tianmingchuang.com/youjia');
             $info = json_decode($info,1);
-            dd($info);
+//            dd($info);
             //与redis里的数据做对比油价是否有变动
 //        });
     }

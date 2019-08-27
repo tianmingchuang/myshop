@@ -34,13 +34,13 @@ class Kernel extends ConsoleKernel
             $redis = new \Redis();
             $redis->connect('127.0.0.1','6379');
             $app = app('wechat.official_account');
-            \Log::Info('123456789');
+//            \Log::Info('123456789');
 //            return;
 //            $info = file_get_contents('http://www.tianmingchuang.com/youjia');
 //            $info = json_decode($info,1);
 
             //与redis里的数据做对比油价是否有变动
-        })->everyMinute();
+        })->daily();
     }
 
     /**
