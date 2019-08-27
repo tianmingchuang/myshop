@@ -33,9 +33,9 @@ class Kernel extends ConsoleKernel
             //业务逻辑
             //获取数据
             Log::Info(123456789);
-            return;
-            $info = file_get_contents('http://www.tianmingchuang.com/youjia');
-            $info = json_decode($info,1);
+//            return;
+//            $info = file_get_contents('http://www.tianmingchuang.com/youjia');
+//            $info = json_decode($info,1);
 
             //与redis里的数据做对比油价是否有变动
         });
