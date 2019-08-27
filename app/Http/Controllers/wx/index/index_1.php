@@ -1063,6 +1063,7 @@ class index_1 extends Controller
 //        dd(11);
         $redis = new \Redis();
         $redis->connect('127.0.0.1','6379');
+        $app = app('wechat.official_account');
 //        $schedule->call(function(){
             //业务逻辑
             //获取数据
@@ -1072,7 +1073,7 @@ class index_1 extends Controller
         foreach($info as $v){
 //            dump($v);
             if ($redis->exists($v['city'])){
-//                dump($v);
+//                dd($v);
 //                unset($v['city'],$v['b90'],$v['0h']);
 
                 $info1 = json_decode($redis->get($v['city']),1);
@@ -1083,6 +1084,26 @@ class index_1 extends Controller
 //                    dump($vi);
                         if($vi != $info1[$k]){
 //                            dump(11);
+                            unset($v['city'],$v['b90'],$v['0h']);
+                            $date = '';
+                            foreach($v as $k=>$vi){
+//                        dump($vi);
+//                        dump($k);
+                                $date .= $k.': 每升'.$vi.'元'."\n";
+                            }
+                            $openid = $app->user->list($nextOpenId = null)['data']['openid'];
+//                            dd($openid);
+                            foreach($openid as $vc){
+                                $app->template_message->send([
+                                    'touser' => $v['city'],
+                                    'template_id' => 's_YzwGdD1NrLBTStf4D_qD88Sqa5OG8oZ3M8cK2QVSs',
+//                                    'url' => 'https://easywechat.org',
+                                    'data' => [
+                                        'first' => $v['city'],
+                                        'keyword1' => $date,
+                                    ],
+                                ]);
+                            }
                         }
                     }
 
