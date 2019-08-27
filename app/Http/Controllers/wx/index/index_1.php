@@ -1095,15 +1095,23 @@ class index_1 extends Controller
 //                            dd($openid);
                             foreach($openid as $vc){
                                 $app->template_message->send([
-                                    'touser' => $v['city'],
+                                    'touser' => $vc,
                                     'template_id' => 's_YzwGdD1NrLBTStf4D_qD88Sqa5OG8oZ3M8cK2QVSs',
 //                                    'url' => 'https://easywechat.org',
                                     'data' => [
-                                        'first' => $v['city'],
-                                        'keyword1' => $date,
+                                        'first' => [
+                                            'value' => $v,
+                                            "color" => "#173177"
+                                        ],
+                                        'keyword1' =>[
+                                            'value' => $date,
+                                            "color" => "#173177"
+                                        ]
                                     ],
                                 ]);
+
                             }
+                            dd();
                         }
                     }
 
