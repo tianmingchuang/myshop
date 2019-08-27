@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
 //            $info = json_decode($info,1);
 
             //与redis里的数据做对比油价是否有变动
-        });
+        })->everyMinute();
     }
 
     /**
