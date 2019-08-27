@@ -27,12 +27,14 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $redis = new \Redis();
-        $redis->connect('127.0.0.1','6379');
-        $schedule->call(function(Wechat $wechat ,$redis){
+
+        $schedule->call(function(){
             //业务逻辑
             //获取数据
-            Log::Info(123456789);
+            $redis = new \Redis();
+            $redis->connect('127.0.0.1','6379');
+            $app = app('wechat.official_account');
+            Log::Info('123456789');
 //            return;
 //            $info = file_get_contents('http://www.tianmingchuang.com/youjia');
 //            $info = json_decode($info,1);
