@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Http\Tools\Wechat;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,9 +29,11 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         $redis = new \Redis();
         $redis->connect('127.0.0.1','6379');
-        $schedule->call(function(){
+        $schedule->call(function(Wechat $wechat ,$redis){
             //业务逻辑
             //获取数据
+            Log::Info(123456789);
+            return;
             $info = file_get_contents('http://www.tianmingchuang.com/youjia');
             $info = json_decode($info,1);
 
