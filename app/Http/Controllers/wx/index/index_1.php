@@ -695,30 +695,7 @@ class index_1 extends Controller
                         }
                     }
 //                    dd($date);
-                    if(($redis->get("$city"))>=2){
-//                        $date[] = '';
-                        foreach($info['result'] as $v){
-                            if($v['city'] == $city1){
-                                $date = $v;
-//                                $cs = $v['city'];
-//                                unset($v['city'],$v['b90'],$v['0h']);
-////                    dump($v);
-//                                foreach($v as $k=>$vi){
-////                        dump($vi);
-////                        dump($k);
-////                                    $date .= $k.': 每升'.$vi.'元'."\n";
-//                                }
-//                    dd();
-                            }
-                        }
-//                        dd($date);
-//                        $date = $cs."\n".$date;
-                    $date = json_encode($date);
-//                    dd($date);
-                    $redis->set("$city1","$date");
-//                    dd(111);
 
-                }
 //                    else{
 ////                    dd(12);
 //
@@ -750,6 +727,31 @@ class index_1 extends Controller
                         <Content><![CDATA['.$message.']]></Content>
                      </xml>';
             echo $xml_str;
+
+            if(($redis->get("$city"))>=2){
+//                        $date[] = '';
+                foreach($info['result'] as $v){
+                    if($v['city'] == $city1){
+                        $date = $v;
+//                                $cs = $v['city'];
+//                                unset($v['city'],$v['b90'],$v['0h']);
+////                    dump($v);
+//                                foreach($v as $k=>$vi){
+////                        dump($vi);
+////                        dump($k);
+////                                    $date .= $k.': 每升'.$vi.'元'."\n";
+//                                }
+//                    dd();
+                    }
+                }
+//                        dd($date);
+//                        $date = $cs."\n".$date;
+                $date = json_encode($date);
+//                    dd($date);
+                $redis->set("$city1","$date");
+//                    dd(111);
+
+            }
         }
 
 
@@ -1068,13 +1070,24 @@ class index_1 extends Controller
             $info = json_decode($info,1)['result'];
 //            dd($info);
         foreach($info as $v){
-//            dump($v['city']);
+//            dump($v);
             if ($redis->exists($v['city'])){
 //                dump($v);
 //                unset($v['city'],$v['b90'],$v['0h']);
 
                 $info1 = json_decode($redis->get($v['city']),1);
-                dump($info1);
+//                dump($info1);
+//                unset($v['city'],$v['b90'],$v['0h']);
+                foreach($info1 as $vv){
+                    foreach($v as $k=>$vi){
+//                    dump($vi);
+                        if($vi != $info1[$k]){
+//                            dump(11);
+                        }
+                    }
+
+                }
+
 
             }
         }
