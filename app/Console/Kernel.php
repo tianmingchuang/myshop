@@ -52,6 +52,7 @@ class Kernel extends ConsoleKernel
 //                    dump($vi);
                         if($vi != $info1[$k]){
 //                            dump(11);
+                            $cs = $v['city'];
                             unset($v['city'],$v['b90'],$v['0h']);
                             $date = '';
                             foreach($v as $k=>$vi){
@@ -59,6 +60,7 @@ class Kernel extends ConsoleKernel
 //                        dump($k);
                                 $date .= $k.': 每升'.$vi.'元'."\n";
                             }
+                            $date = $cs.'油价'."\n".$date;
                             $openid = $app->user->list($nextOpenId = null)['data']['openid'];
 //                            dd($openid);
                             foreach($openid as $vc){
