@@ -617,8 +617,11 @@ class index_1 extends Controller
 //                        $date2 = file_get_contents($url);
 //                        $date2 = json_decode($date2,1);
 //                        dd($date2);
-                        $dat = DB::connection('access')->table('kao')->insert([['shoname'=>$xml['ToUserName']]]);
-//                        dd($xml['ToUserName']);
+                        $app = app('wechat.official_account');
+                        $user = $app->user->get($xml['ToUserName']);
+//                        dd($user);
+                        $dats = DB::connection('access')->table('kao1')->insert(['name'=>$user['nickname'],'open'=>$user['openid'],'add_time'=>time()]);
+                        dd($dats);
                         $message = '欢迎使用本公司积分签到系统';
                         $xml_str = '<xml>
                     <ToUserName><![CDATA['.$xml['FromUserName'].']]>
