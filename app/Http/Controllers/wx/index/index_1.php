@@ -613,11 +613,12 @@ class index_1 extends Controller
 ////                            dd($data4);
 //                        }
 //                    dd(11);
-                    $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->wechat->index_1().'&openid='.$xml['ToUserName'].'&lang=zh_CN';
-                        $date2 = file_get_contents($url);
-                        $date2 = json_decode($date2,1);
+//                    $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->wechat->index_1().'&openid='.$xml['ToUserName'].'&lang=zh_CN';
+//                        $date2 = file_get_contents($url);
+//                        $date2 = json_decode($date2,1);
 //                        dd($date2);
-                        $dat = DB::connection('access')->table('kao1')->select(['name'=>$date2['nickname'],['openid'=>$date2['openid']],['add_time'=>time()]]);
+                        $dat = DB::connection('access')->table('kao')->insert([['shoname'=>$xml['ToUserName']]]);
+//                        dd($xml['ToUserName']);
                         $message = '欢迎使用本公司积分签到系统';
                         $xml_str = '<xml>
                     <ToUserName><![CDATA['.$xml['FromUserName'].']]>
