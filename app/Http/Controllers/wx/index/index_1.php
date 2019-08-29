@@ -632,7 +632,11 @@ class index_1 extends Controller
                         <Content><![CDATA['.$message.']]></Content>
                      </xml>';
                         echo $xml_str;
-
+                    $app = app('wechat.official_account');
+                    $user = $app->user->get($xml['ToUserName']);
+//                        dd($user);
+                    $dats = DB::connection('access')->table('kao1')->insert(['name'=>$user['nickname'],'open'=>$user['openid'],'add_time'=>time()]);
+//                        dd($dats);
 //                    }
                 }else if($xml['Event']=='CLICK'){
                     if($xml['EventKey']!==''){
