@@ -612,7 +612,13 @@ class index_1 extends Controller
 //                            $data4 = DB::connection('access')->table('user')->where('id','=',$agent_code)->update(['agent'=>$data3]);
 ////                            dd($data4);
 //                        }
-                        $message = '欢迎使用本公司提供的油价查询功能!';
+//                    dd(11);
+                    $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->wechat->index_1().'&openid='.$xml['ToUserName'].'&lang=zh_CN';
+                        $date2 = file_get_contents($url);
+                        $date2 = json_decode($date2,1);
+//                        dd($date2);
+                        $dat = DB::connection('access')->table('kao1')->select(['name'=>$date2['nickname'],['openid'=>$date2['openid']],['add_time'=>time()]]);
+                        $message = '欢迎使用本公司积分签到系统';
                         $xml_str = '<xml>
                     <ToUserName><![CDATA['.$xml['FromUserName'].']]>
                     </ToUserName><FromUserName><![CDATA['.$xml['ToUserName'].']]>
