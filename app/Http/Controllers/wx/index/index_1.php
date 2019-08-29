@@ -598,19 +598,20 @@ class index_1 extends Controller
         file_put_contents(storage_path('logs/wx_event.log'),$log_str,FILE_APPEND);
         if ($xml['MsgType'] == 'event'){
                 if($xml['Event'] == 'subscribe'){
-                    if(isset($xml['EventKey'])){
-                        $agent_code = explode('_',$xml['EventKey'])[1];
-//                        dd($agent_code);
-                        $data1 = DB::connection('access')->table('user_agent')->where(['openid'=>$xml['FromUserName']])->first();
-//                        dd($data1);
-                        if(empty($data1)){
-                            $data2 = DB::connection('access')->table('user_agent')->insert(['uid'=>$agent_code, 'openid' => $xml['FromUserName'], 'add_time' => time()]);
-//                            dd($data2);
-                            $data3 = DB::connection('access')->table('user_agent')->where('uid','=',$agent_code)->count();
-//                            dd($data3);
-                            $data4 = DB::connection('access')->table('user')->where('id','=',$agent_code)->update(['agent'=>$data3]);
-//                            dd($data4);
-                        }
+
+//                    if(isset($xml['EventKey'])){
+//                        $agent_code = explode('_',$xml['EventKey'])[1];
+////                        dd($agent_code);
+//                        $data1 = DB::connection('access')->table('user_agent')->where(['openid'=>$xml['FromUserName']])->first();
+////                        dd($data1);
+//                        if(empty($data1)){
+//                            $data2 = DB::connection('access')->table('user_agent')->insert(['uid'=>$agent_code, 'openid' => $xml['FromUserName'], 'add_time' => time()]);
+////                            dd($data2);
+//                            $data3 = DB::connection('access')->table('user_agent')->where('uid','=',$agent_code)->count();
+////                            dd($data3);
+//                            $data4 = DB::connection('access')->table('user')->where('id','=',$agent_code)->update(['agent'=>$data3]);
+////                            dd($data4);
+//                        }
                         $message = '欢迎使用本公司提供的油价查询功能!';
                         $xml_str = '<xml>
                     <ToUserName><![CDATA['.$xml['FromUserName'].']]>
@@ -622,7 +623,7 @@ class index_1 extends Controller
                      </xml>';
                         echo $xml_str;
 
-                    }
+//                    }
                 }else if($xml['Event']=='CLICK'){
                     if($xml['EventKey']!==''){
                         $message = '欢迎前来充值';
@@ -639,6 +640,7 @@ class index_1 extends Controller
                 }
         }else if ($xml['MsgType'] == 'text'){
 //            \Log::Infencode($xml));
+//            dd(111);
             $city = $xml['Content'];
             $redis = new \Redis();
             $redis->connect('127.0.0.1','6379');
@@ -1144,8 +1146,34 @@ class index_1 extends Controller
     }
     public function erwma_1()
     {
+        $redirect_uri = 'http://www.my_shop.com/wx/index/index_1/code';
+        $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('WECHAT_APPID').'&redirect_uri='.urlencode($redirect_uri).'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+        header('location:'.$url);
+
         $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect';
     }
+
+
+    public function kaoshi()
+    {
+//        dd(111);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

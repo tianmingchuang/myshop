@@ -308,6 +308,12 @@ Route::get('/wx/index/index_2/youjia', 'wx\index\index_2@youjia');
 Route::get('ceshi', 'wx\index\index_2@ceshi');
 Route::get('youjia', 'PriceController@price_api');
 
+
+///考试
+Route::get('kaoshi', 'wx\index\index_1@kaoshi');
+
+
+
 ////////////任务调度测试
 Route::get('rewudiaodu', 'wx\index\index_1@rewudiaodu');
 ///////////////////////////////////////////////////////
