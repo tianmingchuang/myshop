@@ -330,6 +330,7 @@ Route::get('app/index/delete/{id}', 'app\index@delete');
 Route::get('app/index/kao', 'app\index@kao');
 Route::get('app', 'app\index@app');
 Route::get('model', 'app\index@model');
+Route::get('jieko', 'app\index@jieko');
 
 //Route::get('app/index/kao', 'app\index@kao');
 

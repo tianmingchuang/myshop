@@ -144,7 +144,16 @@ class index extends Controller
         $data = $model->get();
 //        dd($data);
         $data = json_encode($data);
+//        dd($data);
+        echo $data;
+    }
+
+    public function jieko()
+    {
+        $url = 'http://www.tianmingchuang.com/model';
+        $data = $this->wechat->get($url);
         dd($data);
+        dd(json_decode($data,1));
     }
 
 }
