@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use App\Http\Tools\Wechat;
-use App\model\App;
+use App\http\model\kao;
 
 class index extends Controller
 {
@@ -140,7 +140,7 @@ class index extends Controller
 
     public function model()
     {
-        $model = new App;
+        $model = new kao;
         $data = $model->get();
 //        dd($data);
         $data = json_encode($data);
