@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class kao extends Model
 {
     protected $table = 'aaa';
-    protected $primaryKey = 'id';
+//    protected $primaryKey = 'id';
     public $timestamps = false;
 
 }
