@@ -309,8 +309,31 @@ Route::get('ceshi', 'wx\index\index_2@ceshi');
 Route::get('youjia', 'PriceController@price_api');
 
 
+
 ///考试
 Route::get('kaoshi', 'wx\index\index_1@kaoshi');
+
+
+
+
+
+
+
+
+//第九月
+Route::get('app/index/index', 'app\index@index');
+Route::get('app/index/update/{id}', 'app\index@update');
+Route::post('app/index/update_do', 'app\index@update_do');
+Route::get('app/index/delete/{id}', 'app\index@delete');
+
+
+Route::get('app/index/kao', 'app\index@kao');
+Route::get('app', 'app\index@app');
+Route::get('model', 'app\index@model');
+
+//Route::get('app/index/kao', 'app\index@kao');
+
+
 
 
 

@@ -52,6 +52,25 @@ class Wechat{
         return $output;
     }
 
+    function get($url, $params=[]) {
+        $url = "{$url}?" . http_build_query ( $params );
+
+        $ch = curl_init ();
+
+        curl_setopt ( $ch, CURLOPT_URL, $url );
+
+        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
+
+        curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'GET' );
+
+        curl_setopt ( $ch, CURLOPT_TIMEOUT, 60 );
+
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $params );        $result = curl_exec ( $ch );
+
+        curl_close ( $ch );        return $result;
+
+    }
+
     public function index_1()
     {
         $access_token="";

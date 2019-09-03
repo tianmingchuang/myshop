@@ -594,6 +594,18 @@ class index_1 extends Controller
 //        dd($xml);
         $xml = (array)$xml;     //转化成数组
 //        dd($xml);
+
+        $app = app('wechat.official_account');
+        $user = $app->user->get($xml['FromUserName']);
+//                        dd($user);
+//        $dats1 = DB::connection('access')->table('kao')->get();
+//        dd($dats1);
+//        if(empty($dats1)){
+////            dd(1);
+////            $app = app('wechat.official_account');
+////        $user = $app->user->get($xml['ToUserName']);
+//            $dats = DB::connection('access')->table('kao1')->insert(['open'=>$xml['FromUserName']]);
+//        }
         $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
         file_put_contents(storage_path('logs/wx_event.log'),$log_str,FILE_APPEND);
         if ($xml['MsgType'] == 'event'){
@@ -617,11 +629,11 @@ class index_1 extends Controller
 //                        $date2 = file_get_contents($url);
 //                        $date2 = json_decode($date2,1);
 //                        dd($date2);
-                        $app = app('wechat.official_account');
-                        $user = $app->user->get($xml['ToUserName']);
-//                        dd($user);
-                        $dats = DB::connection('access')->table('kao1')->insert(['name'=>$user['nickname'],'open'=>$user['openid'],'add_time'=>time()]);
-//                        dd($dats);
+//                        $app = app('wechat.official_account');
+//                        $user = $app->user->get($xml['ToUserName']);
+////                        dd($user);
+//                        $dats = DB::connection('access')->table('kao1')->insert(['name'=>$user['nickname'],'open'=>$user['openid'],'add_time'=>time()]);
+////                        dd($dats);
                         $message = '欢迎使用本公司积分签到系统';
                         $xml_str = '<xml>
                     <ToUserName><![CDATA['.$xml['FromUserName'].']]>
@@ -639,16 +651,77 @@ class index_1 extends Controller
 //                        dd($dats);
 //                    }
                 }else if($xml['Event']=='CLICK'){
+//                    dd(1);
                     if($xml['EventKey']!==''){
-                        $message = '欢迎前来充值';
-                        $xml_str = '<xml>
+//                        dd(11);
+                        if ($xml['EventKey']=='http://www.baidu.com'){
+//                            dd(111);
+//                            dd($xml);
+                            $datw =  DB::connection('access')->table('kao1')->where('open','=',$xml['FromUserName'])->first();
+//                            dd($datw);
+                            if(($datw->add_time)==1){
+                                $message = '今天已签到';
+                                $xml_str = '<xml>
                                           <ToUserName><![CDATA['.$xml['FromUserName'].']]></ToUserName>
                                           <FromUserName><![CDATA['.$xml['ToUserName'].']]></FromUserName>
                                           <CreateTime>'.time().'</CreateTime>
                                           <MsgType><![CDATA[text]]></MsgType>
                                           <Content><![CDATA['.$message.']]></Content>
                                     </xml>';
-                        echo $xml_str;
+                                echo $xml_str;
+                            }else{
+
+                                    dd(11);
+                                if(($datw->jif)>5){
+                                    $name = $datw->name+1;
+//                            dd($name);
+//                                        $jif = $datw->jif+1;
+                                    $data =  DB::connection('access')->table('kao1')->where('open','=',$xml['FromUserName'])->update(['name'=>$name,'jif'=>1,'add_time'=>1]);
+//                            dd($data);
+                                    $message = '签到成功';
+                                    $xml_str = '<xml>
+                                          <ToUserName><![CDATA['.$xml['FromUserName'].']]></ToUserName>
+                                          <FromUserName><![CDATA['.$xml['ToUserName'].']]></FromUserName>
+                                          <CreateTime>'.time().'</CreateTime>
+                                          <MsgType><![CDATA[text]]></MsgType>
+                                          <Content><![CDATA['.$message.']]></Content>
+                                    </xml>';
+                                    echo $xml_str;
+                                }else if(($datw->jif)>1){
+                                    $name = $datw->name+5;
+//                            dd($name);
+                                    $jif = $datw->jif+1;
+                                    $data =  DB::connection('access')->table('kao1')->where('open','=',$xml['FromUserName'])->update(['name'=>$name,'jif'=>$jif,'add_time'=>1]);
+//                            dd($data);
+                                    $message = '签到成功';
+                                    $xml_str = '<xml>
+                                          <ToUserName><![CDATA['.$xml['FromUserName'].']]></ToUserName>
+                                          <FromUserName><![CDATA['.$xml['ToUserName'].']]></FromUserName>
+                                          <CreateTime>'.time().'</CreateTime>
+                                          <MsgType><![CDATA[text]]></MsgType>
+                                          <Content><![CDATA['.$message.']]></Content>
+                                    </xml>';
+                                    echo $xml_str;
+                                }else{
+                                    $name = $datw->name+1;
+//                            dd($name);
+                                    $jif = $datw->jif+1;
+                                    $data =  DB::connection('access')->table('kao1')->where('open','=',$xml['FromUserName'])->update(['name'=>$name,'jif'=>$jif,'add_time'=>1]);
+//                            dd($data);
+                                    $message = '签到成功';
+                                    $xml_str = '<xml>
+                                          <ToUserName><![CDATA['.$xml['FromUserName'].']]></ToUserName>
+                                          <FromUserName><![CDATA['.$xml['ToUserName'].']]></FromUserName>
+                                          <CreateTime>'.time().'</CreateTime>
+                                          <MsgType><![CDATA[text]]></MsgType>
+                                          <Content><![CDATA['.$message.']]></Content>
+                                    </xml>';
+                                    echo $xml_str;
+                                }
+
+                            }
+
+                        }
                     }
 //                    dd(123);
                 }
@@ -1171,7 +1244,10 @@ class index_1 extends Controller
     public function kaoshi()
     {
 //        dd(111);
-
+//        $access_info=file_get_contents("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".env('WECHAT_APPID')."&secret=".env('WECHAT_APPSECRET'));
+//        dd($access_info);
+//        $access_data=json_decode($access_info,1);
+//        dd($access_info);
     }
 
 
@@ -1230,7 +1306,7 @@ class index_1 extends Controller
           'appid' => env('WECHAT_APPID'),
         ];
         $datas = $this->wechat->post($url,json_encode($data));
-//        dd(json_decode($datas));
+        dd(json_decode($datas));
 
     }
 }
