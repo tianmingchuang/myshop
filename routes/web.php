@@ -284,6 +284,7 @@ Route::get('/wx/index/index_2/index_1','wx\index\index_2@index_1');
 Route::get('/wx/index/index_2/index_2','wx\index\index_2@index_2');
 Route::get('/wx/index/index_2/index_3','wx\index\index_2@index_3');
 Route::get('/wx/index/index_2/index_biao','wx\index\index_2@index_biao');
+Route::get('/wx/index/index_2/aaa','wx\index\index_2@aaa');
 
 Route::group(['middleware' => ['biaobai']], function() {
     Route::get('/wx/index/index_2/index_4', 'wx\index\index_2@index_4');

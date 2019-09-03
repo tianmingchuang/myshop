@@ -345,4 +345,9 @@ class index_2 extends Controller
         dd(json_decode($data,1));
     }
 
+    public function aaa()
+    {
+        $data = DB::table('kao')->get();
+        dd($data);
+    }
 }
