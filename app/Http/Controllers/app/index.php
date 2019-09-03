@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use App\Http\Tools\Wechat;
-use App\Http\Model\kao;
+use App\Http\Controllers\model\kao;
 
 class index extends Controller
 {
