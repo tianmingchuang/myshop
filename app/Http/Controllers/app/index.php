@@ -141,6 +141,7 @@ class index extends Controller
     public function model()
     {
         $model = new kao;
+//        dd($model)
         $data = $model->get();
 //        dd($data);
         $data = json_encode($data);
@@ -154,6 +155,12 @@ class index extends Controller
         $data = $this->wechat->get($url);
         dd($data);
         dd(json_decode($data,1));
+    }
+
+    public function aaa()
+    {
+        $data = DB::table('kao')->get();
+        dd($data);
     }
 
 }

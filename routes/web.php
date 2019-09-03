@@ -331,6 +331,7 @@ Route::get('app/index/kao', 'app\index@kao');
 Route::get('app', 'app\index@app');
 Route::get('model', 'app\index@model');
 Route::get('jieko', 'app\index@jieko');
+Route::get('aaa', 'app\index@aaa');
 
 //Route::get('app/index/kao', 'app\index@kao');
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\http\model;
+namespace app\Http\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class kao extends Model
 {
-    protected $table = 'kao';
+    protected $table = 'aaa';
     protected $primaryKey = 'id';
     public $timestamps = false;
 
