@@ -12,9 +12,10 @@
 */
 
 Route::get('/', function () {
+    //    phpinfo();die;
     return view('welcome');
 });
-Route::get('/user/aaa', 'Admin\User@aaa');
+//Route::get('/user/aaa', 'Admin\User@aaa');
 
 
 
@@ -322,6 +323,10 @@ Route::get('kaoshi', 'wx\index\index_1@kaoshi');
 
 
 //第九月
+Route::get('app/denglu', 'app\admin\index@denglu');
+Route::post('app/denglu_do', 'app\admin\index@denglu_do');
+
+Route::group(['middleware' => ['admin']], function() {
 Route::get('app/index/index', 'app\index@index');
 Route::get('app/index/update/{id}', 'app\index@update');
 Route::post('app/index/update_do', 'app\index@update_do');
@@ -333,6 +338,129 @@ Route::get('app', 'app\index@app');
 Route::get('model', 'app\index@model');
 Route::get('jieko', 'app\index@jieko');
 Route::get('aaa', 'app\index@aaa');
+
+Route::post('app/index/index_1', 'app\index@index_1');
+Route::get('app/index/index_1', function () {
+    return view('app/index/index_1');
+
+});
+//Route::any('app/index/delete_1', 'app\index@delete_1');
+//Route::any('index/update_1', 'app\index@update_1');
+//Route::any('app/index/update_11', 'app\index@update_11');
+//Route::any('app/index/select_11', 'app\index@select_1');
+Route::get('app/index/select_1', function () {
+    return view('app/index/select_1');
+
+});
+Route::get('app/index/updata_1', function () {
+    return view('app/index/updata_1');
+
+});
+
+Route::resource('app/index_1', 'app\index_1');
+
+Route::get('layout/admin', function () {
+    return view('layout/admin');
+});
+
+
+Route::resource('app/index_2', 'app\index_2');
+//Route::get('app/index_2/insert', function(){
+//    return view('app/index_2/insert');
+//});
+Route::get('app/admin1/insert', function () {
+    return view('app/admin1/insert');
+
+});
+Route::get('app/admin1/select', function () {
+    return view('app/admin1/select');
+
+});
+Route::get('app/admin1/update', function () {
+    return view('app/admin1/update');
+
+});
+
+
+
+
+
+Route::get('app/jiemi/jie', 'app\jiemi@jie');
+Route::get('app/jiemi/jie1', 'app\jiemi@jie1');
+
+Route::get('app/jiemi/jiami', 'app\jiemi@jiami');
+Route::get('app/jiemi/rsa', 'app\jiemi@rsa');
+Route::get('app/jiemi/index', 'app\jiemi@index');
+
+//第九月商品
+Route::get('app/admin/index', 'app\admin\index@index');
+//商品类型
+Route::get('app/admin/insert_type', 'app\admin\index@insert_type');
+Route::any('app/admin/insert_do', 'app\admin\index@insert_do');
+Route::post('app/admin/insert_type_1', 'app\admin\index@insert_type_1');
+Route::get('app/admin/select_type', 'app\admin\index@select_type');
+//商品属性
+Route::get('app/admin/insert_category', 'app\admin\index@insert_category');
+Route::any('app/admin/insert_category_do', 'app\admin\index@insert_category_do');
+Route::post('app/admin/insert_category_1', 'app\admin\index@insert_category_1');
+Route::get('app/admin/select_attribute', 'app\admin\index@select_attribute');
+//商品分类类型
+Route::get('app/admin/insert', 'app\admin\index@insert');
+Route::post('app/admin/insert1', 'app\admin\index@insert1');
+Route::get('app/admin/select_category', 'app\admin\index@select_category');
+
+
+Route::get('app/admin', function () {
+    return view('app/admin');
+
+});
+//商品属性添加
+Route::get('app/admin/insert_shuxing/{id}', 'app\admin\index@insert_shuxing');
+Route::get('app/admin/select_shuxingchakan/{id}', 'app\admin\index@select_shuxingchakan');
+Route::any('app/admin/shuxingchakan_do', 'app\admin\index@shuxingchakan_do');
+
+
+
+//商品添加
+Route::get('app/admin/insert_sptianjia', 'app\admin\index@insert_sptianjia');
+Route::post('app/admin/insert_sptianjia_do', 'app\admin\index@insert_sptianjia_do');
+Route::get('app/admin/care/{goods}', 'app\admin\index@care');
+Route::post('app/admin/care_do', 'app\admin\index@care_do');
+Route::get('app/admin/select_type1', 'app\admin\index@select_type1');
+
+//商品展示
+Route::get('app/admin/admin', 'app\admin\index@admin');
+Route::any('app/admin/admin_do', 'app\admin\index@admin_do');
+Route::any('app/admin/admin_gai', 'app\admin\index@admin_gai');
+
+Route::get('app/admin/aa', 'app\admin\index@aa');
+Route::get('app/admin/wuxian', 'app\admin\index@wuxian');
+});
+
+/**
+ * 前台App接口开发
+ */
+Route::group(['middleware' => ['api_index']], function() {
+
+    Route::any('api/index', 'api\index@index');
+    Route::any('api/index_fenlei', 'api\index@index_fenlei');
+    Route::any('api/index_fenlei_do', 'api\index@index_fenlei_do');
+
+});
+
+Route::any('api/index_xiang', 'api\index@index_xiang');
+Route::any('api/index_fen', 'api\index@index_fen');
+Route::any('api/index_attr', 'api\index@index_attr');
+Route::any('api/login', 'api\index@login');
+
+Route::group(['middleware' => ['api_login']], function() {
+
+Route::any('api/as', 'api\index@as');
+
+});
+
+
+
 
 //Route::get('app/index/kao', 'app\index@kao');
 
@@ -346,3 +474,7 @@ Route::get('rewudiaodu', 'wx\index\index_1@rewudiaodu');
 /// //清零接口调用频次
 Route::get('/wx/index/index_1/aa','wx\index\index_1@aa');
 ///////////////////////////////////////////////////////
+
+
+
+

@@ -26,7 +26,8 @@ class Wechat{
         $user_info = json_decode($wechat_user,1);
         return $user_info;
     }
-    public function post($url, $data){
+    public function post($url, $data,$params=[]){
+        $url = "{$url}?" . http_build_query ( $params );
         //初使化init方法
         $ch = curl_init();
         //指定URL

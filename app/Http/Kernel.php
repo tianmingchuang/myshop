@@ -33,7 +33,7 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
+//            \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
@@ -70,6 +70,9 @@ class Kernel extends HttpKernel
         'kao' => \App\Http\Middleware\kao\Kao::class,
         'biaobai' => \App\Http\Middleware\wx\index_2\Biaobai::class,
         'zhokao' => \App\Http\Middleware\wx\index_2\Zhokao::class,
+        'admin' => \App\Http\Middleware\app\Admin::class,
+        'api_index' => \App\Http\Middleware\api\Index::class,
+        'api_login' => \App\Http\Middleware\api\Login::class,
 
 
     ];

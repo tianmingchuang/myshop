@@ -153,7 +153,7 @@ class index extends Controller
     {
         $url = 'http://www.tianmingchuang.com/model';
         $data = $this->wechat->get($url);
-        dd($data);
+//        dd($data);
         dd(json_decode($data,1));
     }
 
@@ -162,5 +162,81 @@ class index extends Controller
         $data = DB::table('kao')->get();
         dd($data);
     }
+
+    public function index_1(Request $request)
+    {
+//        dd(11);
+//        $c_name = $request->input('param');
+        $c_name = $request->input('c_name');
+        $c_sae = $request->input('c_sae');
+//        dd($c_name);
+        if(empty($c_name) || empty($c_sae)){
+            return json_encode(['code'=>201,'msg'=>'参数不够']);
+        }
+//        dd(1);
+        $model = new kao;
+//        dd($model);
+        $data = $model->insert(['c_name'=>$c_name,'c_sae'=>$c_sae]);
+        if($data){
+            return json_encode(['code'=>200,'msg'=>'添加成功']);
+        }else{
+            return json_encode(['code'=>202,'msg'=>'添加失败']);
+        }
+    }
+
+    public function select_1()
+    {
+        $model = new kao;
+        $data = $model->get()->toArray();
+//        dd($data);
+//        if ($data){
+            return json_encode(['code'=>200,'msg'=>$data]);
+//        }
+
+    }
+
+    public function delete_1(Request $request)
+    {
+        $id = $request->input('id');
+//        dd($id);
+        $aaa = new kao;
+        $data = $aaa->where('id',$id)->delete();
+        if($data){
+            return json_encode(['code'=>200,'msg'=>'删除成功']);
+        }else{
+            return json_encode(['code'=>201,'msg'=>'删除失败']);
+        }
+    }
+
+    public function update_1(Request $request)
+    {
+        $id = $request->input('id');
+//        dd($id);
+        $aaa = new kao;
+        $data = $aaa->where('id',$id)->first();
+        if($data){
+            return json_encode(['code'=>200,'msg'=>$data]);
+//        }else{
+//            return json_encode(['code'=>201,'msg'=>'失败']);
+        }
+    }
+
+    public function update_11(Request $request)
+    {
+        $id = $request->input();
+//        dd($id['id']);
+        if(empty($id)){
+            return json_encode(['code'=>202,'msg'=>'修改条件不符']);
+        }
+        $aaa = new kao;
+        $data = $aaa->where('id',$id['id'])->update(['c_name'=>$id['c_name'],'c_sae'=>$id['c_sae']]);
+        if($data){
+            return json_encode(['code'=>200,'msg'=>'修改成功']);
+        }else{
+            return json_encode(['code'=>201,'msg'=>'修改失败']);
+        }
+    }
+
+
 
 }
