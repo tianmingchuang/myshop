@@ -593,7 +593,7 @@ class index_1 extends Controller
         $xml = simplexml_load_string($data,'SimpleXMLElement',LIBXML_NOCDATA);
 //        dd($xml);
         $xml = (array)$xml;     //转化成数组
-//        dd($xml);
+        dd($xml);
 
         $app = app('wechat.official_account');
         $user = $app->user->get($xml['FromUserName']);

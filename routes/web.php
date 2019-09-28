@@ -446,6 +446,19 @@ Route::group(['middleware' => ['api_index']], function() {
     Route::any('api/index_fenlei', 'api\index@index_fenlei');
     Route::any('api/index_fenlei_do', 'api\index@index_fenlei_do');
 
+
+
+    Route::group(['middleware' => ['api_login']], function() {
+
+        Route::any('api/as', 'api\index@as');
+        Route::any('api/order_select', 'api\index@order_select');
+        Route::any('api/jiajian', 'api\index@jiajian');
+
+    });
+
+
+
+
 });
 
 Route::any('api/index_xiang', 'api\index@index_xiang');
@@ -453,11 +466,44 @@ Route::any('api/index_fen', 'api\index@index_fen');
 Route::any('api/index_attr', 'api\index@index_attr');
 Route::any('api/login', 'api\index@login');
 
-Route::group(['middleware' => ['api_login']], function() {
 
-Route::any('api/as', 'api\index@as');
+Route::any('api/orders_insert', 'api\index@orders_insert');
+
+
+
+Route::any('api/index_1/login', 'api\index_1@login');
+Route::any('api/index_1/login_do', 'api\index_1@login_do');
+
+Route::group(['middleware' => ['api_index_1']], function() {
+    Route::any('api/index_1/index', 'api\index_1@index');
+    Route::any('api/index_1/se', 'api\index_1@select');
+    Route::any('api/index_1/login_dd', 'api\index_1@login_dd');
+    Route::any('api/index_1/select', function () {
+        return view('api/index_1/select');
+
+    });
+
+
 
 });
+
+
+Route::any('api/kao/login', 'api\kao@login');
+Route::any('api/kao/index', 'api\kao@index');
+Route::any('api/kao/index_do', 'api\kao@index_do');
+Route::any('api/kao/login_do', 'api\kao@login_do');
+Route::any('api/kao/login_do1', 'api\kao@login_do1');
+Route::get('api/kao/login', function () {
+    return view('api/kao/login');
+
+});
+
+
+Route::any('api/kao/admin', 'api\kao@admin');
+Route::any('api/kao/admin1', 'api\kao@admin1');
+
+
+
 
 
 

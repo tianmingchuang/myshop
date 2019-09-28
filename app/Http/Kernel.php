@@ -73,6 +73,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\app\Admin::class,
         'api_index' => \App\Http\Middleware\api\Index::class,
         'api_login' => \App\Http\Middleware\api\Login::class,
+        'api_index_1' => \App\Http\Middleware\api\Index_1::class,
 
 
     ];
